@@ -3,92 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC Full - Área de Clientes</title>
+    <title>PC Full - Servicio Técnico Especializado</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <header>
         <div class="header-content">
-            <div class="logo">
-                <span class="logo-icon">💻</span>
-                <h1>PC Full - Área de Clientes</h1>
-            </div>
-            
             <nav>
                 <ul>
-                    <li><a href="#" class="active">Mis Órdenes</a></li>
-                    <li><a href="#">Solicitar Servicio</a></li>
-                    <li><a href="#">Contacto</a></li>
+                    <li><a href="Inicio"></a>Inicio</li>
+                    <li>Servicios</li>
+                    <li>Solicitar Servicio</li>
+                    <li>Contacto</li>
+                    <li>Área Clientes</li>
                 </ul>
             </nav>
-            
+
             <div class="user-actions">
-                <span style="color: white; margin-right: 1rem;">Juan Pérez</span>
-                <a href="index.html" class="btn btn-outline">Vista Admin</a>
-                <a href="login.html" class="btn btn-outline">Cerrar Sesión</a>
+                <a href="whatsapp" class="">WhatsApp</a>
             </div>
         </div>
     </header>
-    
+
     <main>
-        <div class="client-welcome">
-            <h2>¡Bienvenido, Juan Pérez!</h2>
-            <p>Aquí puedes seguir el estado de tus equipos en reparación</p>
-        </div>
-        
-        <div class="client-dashboard">
-            <div class="client-card">
-                <div class="client-card-header">
-                    <span class="client-card-icon">💻</span>
-                    <h3>Órdenes de Servicio Activas</h3>
+        <section id="Inicio">
+            <div class="hero-content">
+                <h1>Servicio Técnico Profesional de Computadoras</h1>
+                <p>Reparación, mantenimiento y optimización de equipos con garantía y calidad</p>
+                <div class="hero-buttons">
+                    <a href="#solicitar" class="btn btn-primary">Solicitar Servicio</a>
+                    <a href="#servicios" class="btn btn-outline" style="color: var(--primary-color); border-color: var(--primary-color);">Ver Servicios</a>
                 </div>
-                
-                <div class="order-item">
-                    <h4>Orden #PCF-2025-0015 - Laptop HP Pavilion</h4>
-                    <p><strong>Falla:</strong> No enciende - Problema de fuente</p>
-                    <p><strong>Ingreso:</strong> 12/08/2025</p>
-                    <span class="order-status status-progress">En Reparación</span>
-                </div>
-                
-                <div class="order-item">
-                    <h4>Orden #PCF-2025-0023 - PC Gamer</h4>
-                    <p><strong>Falla:</strong> Sobrecalentamiento - Cambio de pasta térmica</p>
-                    <p><strong>Ingreso:</strong> 14/08/2025</p>
-                    <span class="order-status status-pending">Esperando Repuestos</span>
+
+                <div class="hero-image">
+                    <span style="font-size: 5rem;">🔧</span>
+                    <span style="font-size: 5rem;">💻</span>
                 </div>
             </div>
+        </section>
+
+        <section>
             
-            <div class="client-card">
-                <div class="client-card-header">
-                    <span class="client-card-icon">✅</span>
-                    <h3>Órdenes Completadas</h3>
-                </div>
-                
-                <div class="order-item">
-                    <h4>Orden #PCF-2025-0008 - Monitor Samsung</h4>
-                    <p><strong>Servicio:</strong> Cambio de condensadores</p>
-                    <p><strong>Completado:</strong> 10/08/2025</p>
-                    <span class="order-status status-completed">Entregado</span>
-                </div>
-            </div>
-            
-            <div class="client-card">
-                <div class="client-card-header">
-                    <span class="client-card-icon">📞</span>
-                    <h3>Contacto Rápido</h3>
-                </div>
-                <p>¿Necesitas ayuda o tienes preguntas sobre tu equipo?</p>
-                <div style="margin-top: 1rem;">
-                    <button class="btn btn-primary">Enviar Mensaje</button>
-                    <button class="btn btn-outline" style="color: var(--primary-color); border-color: var(--primary-color);">Llamar ahora</button>
-                </div>
-            </div>
-        </div>
+        </section>
     </main>
-    
+
     <footer>
-        <p>PC Full - Sistema de Gestión Integral para Servicio Técnico</p>
-        <p>© 2025 - Área de Clientes</p>
+
     </footer>
 </body>
 </html>

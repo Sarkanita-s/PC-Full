@@ -1,12 +1,13 @@
 /* css/styles.css */
 :root {
-    --primary-color: #3498db;
-    --secondary-color: #2c3e50;
+    --primary-color: #8e8c53;
+    --secondary-color: #6b6940;
     --accent-color: #e74c3c;
-    --light-color: #ecf0f1;
+    --light-color: #f5f4e9;
     --success-color: #2ecc71;
     --warning-color: #f39c12;
     --text-color: #333;
+    --text-gradient: linear-gradient(135deg, #fff9c5, #f5f38b);
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -18,7 +19,7 @@
 }
 
 body {
-    background-color: #f5f7fa;
+    background-color: #f8f8f2;
     color: var(--text-color);
     line-height: 1.6;
 }
@@ -47,10 +48,18 @@ header {
 
 .logo h1 {
     font-size: 1.8rem;
+    background: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .logo-icon {
     font-size: 2rem;
+    background: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 nav ul {
@@ -89,12 +98,12 @@ nav a:hover {
 }
 
 .btn-primary {
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
 }
 
 .btn-primary:hover {
-    background-color: #2980b9;
+    background: linear-gradient(135deg, #7a7849, #5c5a36);
 }
 
 .btn-outline {
@@ -138,17 +147,28 @@ main {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
-    color: var(--primary-color);
+    background: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .admin-card-icon {
     font-size: 1.8rem;
     margin-right: 0.8rem;
+    background: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .admin-card h3 {
     font-size: 1.2rem;
     margin: 0;
+    background: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .admin-stats {
@@ -170,7 +190,10 @@ main {
 .admin-stat-number {
     font-size: 2.5rem;
     font-weight: bold;
-    color: var(--primary-color);
+    background: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     margin-bottom: 0.5rem;
 }
 
@@ -187,7 +210,7 @@ main {
 }
 
 .client-welcome {
-    background: linear-gradient(135deg, var(--primary-color), #2980b9);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
     padding: 2rem;
     border-radius: 8px;
@@ -206,12 +229,19 @@ main {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
-    color: var(--primary-color);
+    background: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .client-card-icon {
     font-size: 1.5rem;
     margin-right: 0.8rem;
+    background: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .order-item {
@@ -250,7 +280,7 @@ main {
 
 /* FOOTER */
 footer {
-    background-color: var(--secondary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
     text-align: center;
     padding: 1.5rem;
@@ -282,7 +312,10 @@ footer {
 }
 
 .login-logo h2 {
-    color: var(--primary-color);
+    background: var(--text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     margin-top: 0.5rem;
 }
 
@@ -310,23 +343,23 @@ footer {
 .form-group select:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    box-shadow: 0 0 0 2px rgba(142, 140, 83, 0.2);
 }
 
 .btn-login {
     width: 100%;
     padding: 0.75rem;
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
 }
 
 .btn-login:hover {
-    background-color: #2980b9;
+    background: linear-gradient(135deg, #7a7849, #5c5a36);
 }
 
 .login-links {
@@ -341,7 +374,7 @@ footer {
 }
 
 .login-links a:hover {
-    color: #2980b9;
+    color: var(--secondary-color);
     text-decoration: underline;
 }
 
