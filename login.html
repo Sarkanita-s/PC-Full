@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Full - Iniciar Sesión</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <span style="font-size: 3rem;">💻</span>
+                <h2>PC Full - Iniciar Sesión</h2>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Tipo de acceso:</label>
+                    <select id="role" name="role" required>
+                        <option value="">Seleccionar tipo...</option>
+                        <option value="admin">Administrador</option>
+                        <option value="client">Cliente</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-login">Ingresar al Sistema</button>
+            </form>
+
+            <div class="login-links">
+                <p><a href="#">¿Olvidaste tu contraseña?</a></p>
+                <p>¿No tienes cuenta? <a href="register.html">Registrarse</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+            
+            if (username && password && role) {
+                if (role === 'admin') {
+                    window.location.href = 'index.html';
+                } else if (role === 'client') {
+                    window.location.href = 'client.html';
+                }
+            } else {
+                alert('Por favor completa todos los campos');
+            }
+        });
+    </script>
+</body>
+</html>
