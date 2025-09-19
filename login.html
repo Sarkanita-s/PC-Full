@@ -10,8 +10,8 @@
     <div class="login-container">
         <div class="login-card">
             <div class="login-logo">
-                <span style="font-size: 3rem;">💻</span>
-                <h2>PC Full - Iniciar Sesión</h2>
+                <span style="font-size: 6rem;">💻</span>
+                <h2 style="color: black;">PC Full - Iniciar Sesión</h2>
             </div>
 
             <form id="loginForm">
@@ -54,7 +54,7 @@
             
             if (username && password && role) {
                 if (role === 'admin') {
-                    window.location.href = 'index.html';
+                    window.location.href = 'admin.html';
                 } else if (role === 'client') {
                     window.location.href = 'client.html';
                 }

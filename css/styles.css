@@ -48,18 +48,18 @@ header {
 
 .logo h1 {
     font-size: 1.8rem;
-    background: var(--text-gradient);
+    /* background: var(--text-gradient);
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
+    color: transparent; */
 }
 
 .logo-icon {
     font-size: 2rem;
-    background: var(--text-gradient);
+    /* background: var(--text-gradient);
     -webkit-background-clip: text;
     background-clip: text;
-    color: transparent;
+    color: transparent; */
 }
 
 nav ul {
@@ -147,28 +147,16 @@ main {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
-    background: var(--text-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
 }
 
 .admin-card-icon {
     font-size: 1.8rem;
     margin-right: 0.8rem;
-    background: var(--text-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
 }
 
 .admin-card h3 {
     font-size: 1.2rem;
     margin: 0;
-    background: var(--text-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
 }
 
 .admin-stats {
@@ -190,11 +178,7 @@ main {
 .admin-stat-number {
     font-size: 2.5rem;
     font-weight: bold;
-    background: var(--text-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 0.5rem;
+    
 }
 
 .admin-stat-label {
