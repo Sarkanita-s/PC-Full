@@ -94,11 +94,11 @@ nav a:hover::after {
 /* Bloques de Acción */
 .action-blocks {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: right;
+    justify-content: right;
 }
 
-.action-blocks .block {
+.action-blocks .blockwsp {
     background-color: #25D366; /* Color de WhatsApp */
     padding: 0.8rem 1.5rem;
     margin: 0.5rem;
@@ -113,10 +113,31 @@ nav a:hover::after {
     gap: 0.5rem;
 }
 
-.action-blocks .block:hover {
+.action-blocks .blockwsp:hover {
     background-color: #128C7E;
     transform: translateY(-2px);
 }
+
+.action-blocks .blockest {
+    background-color: #f39c12; /* Color de estado */
+    padding: 0.8rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.action-blocks .blocklgn {
+    background-color: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 0.8rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+    text-align: center;
+    color: #8e8c53; /* color de las letras */
+    font-weight: bold;
+}
+
 
 /* Sección Hero */
 #Inicio {
