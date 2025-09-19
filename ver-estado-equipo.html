@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Estado del Equipo - PC Full</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <nav>
+                <ul>
+                    <li><a href="client.html#Inicio">Inicio</a></li>
+                    <li><a href="client.html#servicios">Servicios</a></li>
+                    <li><a href="client.html#solicitar">Solicitar Servicio</a></li>
+                    <li><a href="client.html#contacto">Contacto</a></li>
+                    <li><a href="client.html#clientes">Área Clientes</a></li>
+                </ul>
+            </nav>
+
+            <div class="action-blocks">
+                <a href="whatsapp" class="blockwsp">WhatsApp</a>
+                <a href="ver-estado-equipo.html" class="blockest">Ver estado</a>
+                <a href="login.html" class="blocklgn">Iniciar Sesión</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="estado-equipo-section">
+            <div class="container">
+                <h1>Consultar Estado del Equipo</h1>
+                <p>Ingresa tu número de orden o RUT para consultar el estado de tu equipo</p>
+                
+                <div class="consulta-form">
+                    <form id="estadoForm">
+                        <div class="form-group">
+                            <label for="tipoConsulta">Tipo de consulta:</label>
+                            <select id="tipoConsulta" name="tipoConsulta" required>
+                                <option value="">Selecciona una opción</option>
+                                <option value="orden">Número de Orden</option>
+                                <option value="rut">RUT del Cliente</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="numeroOrdenGroup" style="display: none;">
+                            <label for="numeroOrden">Número de Orden:</label>
+                            <input type="text" id="numeroOrden" name="numeroOrden" placeholder="Ej: ORD-2024-001">
+                        </div>
+
+                        <div class="form-group" id="rutGroup" style="display: none;">
+                            <label for="rut">RUT (sin puntos, con guión):</label>
+                            <input type="text" id="rut" name="rut" placeholder="Ej: 12345678-9">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Consultar Estado</button>
+                    </form>
+                </div>
+
+                <div id="resultadoConsulta" class="resultado-estado" style="display: none;">
+                    <div class="estado-card">
+                        <h3>Estado del Equipo</h3>
+                        <div class="info-equipo">
+                            <p><strong>Número de Orden:</strong> <span id="ordenNumero"></span></p>
+                            <p><strong>Cliente:</strong> <span id="clienteNombre"></span></p>
+                            <p><strong>Equipo:</strong> <span id="equipoDescripcion"></span></p>
+                            <p><strong>Fecha de Ingreso:</strong> <span id="fechaIngreso"></span></p>
+                            <p><strong>Estado Actual:</strong> <span id="estadoActual" class="estado-badge"></span></p>
+                            <p><strong>Descripción del Problema:</strong> <span id="problemaDescripcion"></span></p>
+                        </div>
+                        
+                        <div class="progreso-reparacion">
+                            <h4>Progreso de Reparación</h4>
+                            <div class="timeline">
+                                <div class="timeline-item completed">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h5>Recepción del Equipo</h5>
+                                        <p>Equipo recibido y registrado en sistema</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item" id="diagnostico">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h5>Diagnóstico</h5>
+                                        <p>Evaluación del problema reportado</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item" id="reparacion">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h5>Reparación</h5>
+                                        <p>Trabajo técnico en progreso</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item" id="pruebas">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h5>Pruebas</h5>
+                                        <p>Verificación de funcionamiento</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item" id="finalizado">
+                                    <div class="timeline-marker"></div>
+                                    <div class="timeline-content">
+                                        <h5>Listo para Entrega</h5>
+                                        <p>Equipo reparado y listo</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="notas-tecnico">
+                            <h4>Notas del Técnico</h4>
+                            <div id="notasTecnico">
+                                <p>No hay notas adicionales por el momento.</p>
+                            </div>
+                        </div>
+
+                        <div class="contacto-info">
+                            <p><strong>¿Tienes preguntas?</strong> Contáctanos por WhatsApp o teléfono para más información.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="mensajeError" class="mensaje-error" style="display: none;">
+                    <p>No se encontró información para los datos ingresados. Verifica que el número de orden o RUT sean correctos.</p>
+                    <p>Si el problema persiste, contáctanos directamente.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 PC Full. Todos los derechos reservados.</p>
+        <p>Contacto: </p>
+    </footer>
+
+    <script>
+        document.getElementById('tipoConsulta').addEventListener('change', function() {
+            const tipo = this.value;
+            const numeroOrdenGroup = document.getElementById('numeroOrdenGroup');
+            const rutGroup = document.getElementById('rutGroup');
+            
+            // Ocultar ambos grupos
+            numeroOrdenGroup.style.display = 'none';
+            rutGroup.style.display = 'none';
+            
+            // Mostrar el grupo correspondiente
+            if (tipo === 'orden') {
+                numeroOrdenGroup.style.display = 'block';
+                document.getElementById('numeroOrden').required = true;
+                document.getElementById('rut').required = false;
+            } else if (tipo === 'rut') {
+                rutGroup.style.display = 'block';
+                document.getElementById('rut').required = true;
+                document.getElementById('numeroOrden').required = false;
+            }
+        });
+
+        document.getElementById('estadoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const tipoConsulta = document.getElementById('tipoConsulta').value;
+            const numeroOrden = document.getElementById('numeroOrden').value;
+            const rut = document.getElementById('rut').value;
+            
+            // Simular consulta al servidor
+            consultarEstado(tipoConsulta, numeroOrden, rut);
+        });
+
+        function consultarEstado(tipo, orden, rut) {
+            // Simular datos de ejemplo
+            const datosEjemplo = {
+                ordenNumero: 'ORD-2024-001',
+                clienteNombre: 'Juan Pérez',
+                equipoDescripcion: 'Notebook HP Pavilion 15"',
+                fechaIngreso: '15/09/2024',
+                estadoActual: 'En Reparación',
+                problemaDescripcion: 'Sobrecalentamiento y lentitud del sistema',
+                etapaActual: 'reparacion'
+            };
+
+            // Mostrar resultado
+            mostrarResultado(datosEjemplo);
+        }
+
+        function mostrarResultado(datos) {
+            // Llenar información
+            document.getElementById('ordenNumero').textContent = datos.ordenNumero;
+            document.getElementById('clienteNombre').textContent = datos.clienteNombre;
+            document.getElementById('equipoDescripcion').textContent = datos.equipoDescripcion;
+            document.getElementById('fechaIngreso').textContent = datos.fechaIngreso;
+            document.getElementById('estadoActual').textContent = datos.estadoActual;
+            document.getElementById('problemaDescripcion').textContent = datos.problemaDescripcion;
+
+            // Actualizar timeline
+            actualizarTimeline(datos.etapaActual);
+
+            // Mostrar resultado
+            document.getElementById('resultadoConsulta').style.display = 'block';
+            document.getElementById('mensajeError').style.display = 'none';
+        }
+
+        function actualizarTimeline(etapaActual) {
+            const etapas = ['diagnostico', 'reparacion', 'pruebas', 'finalizado'];
+            let etapaIndex = etapas.indexOf(etapaActual);
+            
+            etapas.forEach((etapa, index) => {
+                const elemento = document.getElementById(etapa);
+                if (index <= etapaIndex) {
+                    elemento.classList.add('completed');
+                    if (index === etapaIndex) {
+                        elemento.classList.add('current');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
