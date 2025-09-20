@@ -148,7 +148,7 @@ function limpiarSesionCompleta() {
 
 // Verificar si el usuario ya está logueado
 function verificarSesionActiva() {
-    // Comentado para evitar bucles de redirección
+    // Comentado para evitar bucles de redirección !!! CAMBIOS DE LUCES RAPIDOS ¡¡¡
     // Se puede activar más tarde si es necesario
     /*
     const usuarioLogueado = localStorage.getItem('usuario_logueado');
