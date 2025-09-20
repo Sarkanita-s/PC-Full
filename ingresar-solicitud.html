@@ -29,40 +29,49 @@
             </div>
 
             <form id="solicitudForm" class="solicitud-form">
+
                 <!-- Información del Cliente -->
                 <div class="form-section">
                     <h3>📋 Información del Cliente</h3>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="clienteNombre">Nombre Completo*</label>
-                            <input type="text" id="clienteNombre" name="clienteNombre" required>
+                            <label for="clienteRut">RUT/Pasaporte*</label>
+                            <input type="text" id="clienteRut" name="clienteRut" required>
                         </div>
                         <div class="form-group">
-                            <label for="clienteRut">RUT*</label>
-                            <input type="text" id="clienteRut" name="clienteRut" placeholder="12345678-9" required>
+                            <label for="clienteDireccion">Domicilio*</label>
+                            <input type="text" id="clienteDireccion" name="clienteDireccion" required>
                         </div>
                     </div>
-                    
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="clienteTelefono">Teléfono*</label>
-                            <input type="tel" id="clienteTelefono" name="clienteTelefono" placeholder="+56 9 XXXX XXXX" required>
+                            <label for="clienteComuna">Comuna*</label>
+                            <input type="text" id="clienteComuna" name="clienteComuna" required>
                         </div>
                         <div class="form-group">
-                            <label for="clienteEmail">Email</label>
-                            <input type="email" id="clienteEmail" name="clienteEmail" placeholder="cliente@email.com">
+                            <label for="clienteCiudad">Ciudad*</label>
+                            <input type="text" id="clienteCiudad" name="clienteCiudad" required>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label for="clienteDireccion">Dirección</label>
-                        <input type="text" id="clienteDireccion" name="clienteDireccion" placeholder="Calle, Número, Comuna">
+                        <label for="clienteTelefono">Fono*</label>
+                        <input type="tel" id="clienteTelefono" name="clienteTelefono" required>
                     </div>
                 </div>
 
                 <!-- Información del Equipo -->
                 <div class="form-section">
                     <h3>💻 Información del Equipo</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="equipoMarca">Marca*</label>
+                            <input type="text" id="equipoMarca" name="equipoMarca" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipoModelo">Modelo*</label>
+                            <input type="text" id="equipoModelo" name="equipoModelo" required>
+                        </div>
+                    </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="equipoTipo">Tipo de Equipo*</label>
@@ -76,65 +85,67 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="equipoMarca">Marca*</label>
-                            <input type="text" id="equipoMarca" name="equipoMarca" placeholder="HP, Dell, Lenovo, etc." required>
+                            <label for="equipoSerial">Número de Serie*</label>
+                            <input type="text" id="equipoSerial" name="equipoSerial" required>
                         </div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="equipoModelo">Modelo</label>
-                            <input type="text" id="equipoModelo" name="equipoModelo" placeholder="Modelo específico">
-                        </div>
-                        <div class="form-group">
-                            <label for="equipoSerial">Número de Serie</label>
-                            <input type="text" id="equipoSerial" name="equipoSerial" placeholder="Número de serie">
-                        </div>
-                    </div>
-
                     <div class="form-group">
-                        <label for="equipoAccesorios">Accesorios Incluidos</label>
-                        <textarea id="equipoAccesorios" name="equipoAccesorios" rows="2" placeholder="Cargador, mouse, teclado, cables, etc."></textarea>
+                        <label>
+                            <input type="checkbox" id="accesoriosCheck" onchange="document.getElementById('equipoAccesorios').disabled = !this.checked; document.getElementById('equipoAccesorios').value = this.checked ? document.getElementById('equipoAccesorios').value : ''">
+                            ¿Agregar accesorios?
+                        </label>
+                        <textarea id="equipoAccesorios" name="equipoAccesorios" rows="3" maxlength="2000" placeholder="Describe los accesorios (máx 2000 caracteres)" disabled></textarea>
                     </div>
                 </div>
 
                 <!-- Problema Reportado -->
                 <div class="form-section">
-                    <h3>🔧 Problema Reportado</h3>
+                    <h3>🔧 Detalles del Servicio</h3>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="tipoServicio">Tipo de Servicio*</label>
-                            <select id="tipoServicio" name="tipoServicio" required>
+                            <label for="estadoEquipo">Estado*</label>
+                            <select id="estadoEquipo" name="estadoEquipo" required>
                                 <option value="">Seleccionar...</option>
-                                <option value="reparacion">Reparación</option>
-                                <option value="mantenimiento">Mantenimiento</option>
-                                <option value="limpieza">Limpieza</option>
-                                <option value="instalacion">Instalación de Software</option>
-                                <option value="upgrade">Upgrade de Hardware</option>
-                                <option value="diagnostico">Diagnóstico</option>
-                                <option value="recuperacion">Recuperación de Datos</option>
+                                <option value="recibido">Recibido</option>
+                                <option value="diagnostico">En diagnóstico</option>
+                                <option value="reparacion">En reparación</option>
+                                <option value="esperando-repuestos">Esperando repuestos</option>
+                                <option value="listo">Listo</option>
+                                <option value="entregado">Entregado</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="prioridad">Prioridad*</label>
-                            <select id="prioridad" name="prioridad" required>
-                                <option value="">Seleccionar...</option>
-                                <option value="baja">Baja</option>
-                                <option value="media">Media</option>
-                                <option value="alta">Alta</option>
-                                <option value="urgente">Urgente</option>
-                            </select>
+                            <label for="falla">Falla*</label>
+                            <textarea id="falla" name="falla" rows="3" required></textarea>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="problemaDescripcion">Descripción del Problema*</label>
-                        <textarea id="problemaDescripcion" name="problemaDescripcion" rows="4" placeholder="Describa detalladamente el problema que presenta el equipo..." required></textarea>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="respaldo" name="respaldo">
+                                ¿El cliente quiere respaldo?
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="tecnico">Técnico responsable*</label>
+                            <input type="text" id="tecnico" name="tecnico" required>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="sintomas">Síntomas Observados</label>
-                        <textarea id="sintomas" name="sintomas" rows="3" placeholder="¿Cuándo ocurre? ¿Con qué frecuencia? ¿Mensajes de error específicos?"></textarea>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="abono" name="abono">
+                                ¿Agrega abono inicial?
+                            </label>
+                        </div>
+                        <div class="form-group" id="abonoCantidadGroup" style="display:none;">
+                            <label for="abonoCantidad">Monto abono inicial ($)</label>
+                            <input type="number" id="abonoCantidad" name="abonoCantidad" min="0" placeholder="0" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="numeroOrden">Número de Orden</label>
+                            <input type="text" id="numeroOrden" name="numeroOrden" readonly placeholder="Se asigna automáticamente">
+                        </div>
                     </div>
                 </div>
 
@@ -167,9 +178,8 @@
 
                 <!-- Botones de Acción -->
                 <div class="form-actions">
-                    <button type="button" class="btn-secondary" onclick="limpiarFormulario()">Limpiar Formulario</button>
-                    <button type="button" class="btn-secondary" onclick="guardarBorrador()">Guardar Borrador</button>
-                    <button type="submit" class="btn-primary">Generar Solicitud</button>
+                    <button type="submit" class="btn-primary">Agregar Orden Nueva</button>
+                    <button type="button" class="btn-secondary" onclick="volverMenu()">Volver Atrás</button>
                 </div>
             </form>
 

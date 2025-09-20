@@ -44,12 +44,28 @@ function initializeSolicitudForm() {
         formatearTelefono(e.target);
     });
     
+    // Lógica para mostrar/ocultar y habilitar/deshabilitar el campo de abono
+    const abonoCheckbox = document.getElementById('abono');
+    const abonoCantidadGroup = document.getElementById('abonoCantidadGroup');
+    const abonoCantidadInput = document.getElementById('abonoCantidad');
+    abonoCheckbox.addEventListener('change', function() {
+        if (abonoCheckbox.checked) {
+            abonoCantidadGroup.style.display = '';
+            abonoCantidadInput.disabled = false;
+            abonoCantidadInput.focus();
+        } else {
+            abonoCantidadGroup.style.display = 'none';
+            abonoCantidadInput.value = '';
+            abonoCantidadInput.disabled = true;
+        }
+    });
+
     // Submisión del formulario
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         procesarSolicitud();
     });
-    
+
     // Auto-guardar cada 2 minutos
     setInterval(guardarBorradorAuto, 120000);
 }
@@ -100,6 +116,16 @@ function validarFormulario() {
         if (!elemento.value.trim()) {
             alert(`El campo "${elemento.previousElementSibling.textContent}" es obligatorio.`);
             elemento.focus();
+            return false;
+        }
+    }
+    // Si abono está seleccionado, validar que el monto no esté vacío ni sea negativo
+    const abonoCheckbox = document.getElementById('abono');
+    const abonoCantidadInput = document.getElementById('abonoCantidad');
+    if (abonoCheckbox.checked) {
+        if (!abonoCantidadInput.value.trim() || Number(abonoCantidadInput.value) < 0) {
+            alert('Debe ingresar un monto válido para el abono inicial.');
+            abonoCantidadInput.focus();
             return false;
         }
     }
