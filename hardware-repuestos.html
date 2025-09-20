@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Hardware - PC Full</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span>PC Full - Gestión de Hardware</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="menu-ventas.html">← Volver al Menú</a></li>
+                    <li><a href="#" onclick="exportarInventario()">Exportar</a></li>
+                    <li><a href="#" onclick="agregarRepuesto()">Agregar Repuesto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="hardware-container">
+            <div class="hardware-header">
+                <h1>Gestión de Hardware y Repuestos</h1>
+                <p>Control de inventario, repuestos críticos y compras pendientes</p>
+            </div>
+
+            <!-- Filtros y Búsqueda -->
+            <div class="filtros-section">
+                <div class="filtros-container">
+                    <div class="filtro-group">
+                        <label for="filtroCategoria">Categoría:</label>
+                        <select id="filtroCategoria" onchange="filtrarRepuestos()">
+                            <option value="">Todas</option>
+                            <option value="procesador">Procesadores</option>
+                            <option value="memoria">Memoria RAM</option>
+                            <option value="almacenamiento">Almacenamiento</option>
+                            <option value="tarjeta-video">Tarjetas de Video</option>
+                            <option value="fuente">Fuentes de Poder</option>
+                            <option value="placa-madre">Placas Madre</option>
+                            <option value="refrigeracion">Refrigeración</option>
+                            <option value="cables">Cables y Conectores</option>
+                            <option value="otros">Otros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filtro-group">
+                        <label for="filtroEstado">Estado:</label>
+                        <select id="filtroEstado" onchange="filtrarRepuestos()">
+                            <option value="">Todos</option>
+                            <option value="disponible">Disponible</option>
+                            <option value="critico">Crítico</option>
+                            <option value="agotado">Agotado</option>
+                            <option value="pedido">En Pedido</option>
+                        </select>
+                    </div>
+
+                    <div class="filtro-group">
+                        <label for="busqueda">Buscar:</label>
+                        <input type="text" id="busqueda" placeholder="Buscar por nombre o código..." onkeyup="filtrarRepuestos()">
+                    </div>
+
+                    <button onclick="limpiarFiltros()" class="btn-secondary">Limpiar Filtros</button>
+                </div>
+            </div>
+
+            <!-- Estadísticas Rápidas -->
+            <div class="stats-hardware">
+                <div class="stat-card critico">
+                    <h4>Repuestos Críticos</h4>
+                    <div class="stat-number" id="statCriticos">0</div>
+                    <p>Requieren compra urgente</p>
+                </div>
+                <div class="stat-card agotado">
+                    <h4>Agotados</h4>
+                    <div class="stat-number" id="statAgotados">0</div>
+                    <p>Sin stock disponible</p>
+                </div>
+                <div class="stat-card pedido">
+                    <h4>En Pedido</h4>
+                    <div class="stat-number" id="statPedidos">0</div>
+                    <p>Compras en proceso</p>
+                </div>
+                <div class="stat-card total">
+                    <h4>Total Items</h4>
+                    <div class="stat-number" id="statTotal">0</div>
+                    <p>En inventario</p>
+                </div>
+            </div>
+
+            <!-- Tabla de Repuestos -->
+            <div class="tabla-container">
+                <table id="tablaRepuestos" class="tabla-hardware">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Stock</th>
+                            <th>Mínimo</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                            <th>Proveedor</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaRepuestosBody">
+                        <!-- Los datos se cargan dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Sección de Compras Pendientes -->
+            <div class="compras-section">
+                <h3>🛒 Compras Pendientes</h3>
+                <div class="compras-container">
+                    <div class="compra-urgente">
+                        <h4>Compras Urgentes</h4>
+                        <div id="comprasUrgentes" class="lista-compras">
+                            <!-- Se carga dinámicamente -->
+                        </div>
+                    </div>
+                    <div class="compra-normal">
+                        <h4>Compras Programadas</h4>
+                        <div id="comprasProgramadas" class="lista-compras">
+                            <!-- Se carga dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+                <div class="compras-actions">
+                    <button onclick="generarOrdenCompra()" class="btn-primary">Generar Orden de Compra</button>
+                    <button onclick="contactarProveedor()" class="btn-secondary">Contactar Proveedor</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para Agregar/Editar Repuesto -->
+        <div id="modalRepuesto" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h3 id="modalTitulo">Agregar Nuevo Repuesto</h3>
+                <form id="formRepuesto">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalCodigo">Código*</label>
+                            <input type="text" id="modalCodigo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalNombre">Nombre del Producto*</label>
+                            <input type="text" id="modalNombre" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalCategoria">Categoría*</label>
+                            <select id="modalCategoria" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="procesador">Procesadores</option>
+                                <option value="memoria">Memoria RAM</option>
+                                <option value="almacenamiento">Almacenamiento</option>
+                                <option value="tarjeta-video">Tarjetas de Video</option>
+                                <option value="fuente">Fuentes de Poder</option>
+                                <option value="placa-madre">Placas Madre</option>
+                                <option value="refrigeracion">Refrigeración</option>
+                                <option value="cables">Cables y Conectores</option>
+                                <option value="otros">Otros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalProveedor">Proveedor</label>
+                            <input type="text" id="modalProveedor">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modalStock">Stock Actual*</label>
+                            <input type="number" id="modalStock" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalMinimo">Stock Mínimo*</label>
+                            <input type="number" id="modalMinimo" min="0" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="modalPrecio">Precio ($)</label>
+                        <input type="number" id="modalPrecio" min="0" step="0.01">
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" onclick="cerrarModal()" class="btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 PC Full. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/hardware-repuestos.js"></script>
+</body>
+</html>

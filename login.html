@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PC Full - Iniciar Sesión</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
     <div class="login-container">
         <div class="login-card">
             <div class="login-logo">
                 <span style="font-size: 6rem;">💻</span>
-                <h2 style="color: black;">PC Full - Iniciar Sesión</h2>
+                <h2>PC Full - Iniciar Sesión</h2>
             </div>
 
             <form id="loginForm">
@@ -30,6 +30,7 @@
                     <select id="role" name="role" required>
                         <option value="">Seleccionar tipo...</option>
                         <option value="admin">Administrador</option>
+                        <option value="ventas">Equipo de Ventas</option>
                         <option value="client">Cliente</option>
                     </select>
                 </div>
@@ -38,30 +39,13 @@
             </form>
 
             <div class="login-links">
-                <p><a href="#">¿Olvidaste tu contraseña?</a></p>
-                <p>¿No tienes cuenta? <a href="#">Registrarse</a></p>
+                <p><a href="client.html">Volver al sitio público</a></p>
+                <p>¿Problemas de acceso? <a href="#" onclick="limpiarSesionCompleta(); alert('Sesión limpiada. Intenta iniciar sesión nuevamente.');">Limpiar sesión</a></p>
             </div>
         </div>
     </div>
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const role = document.getElementById('role').value;
-            
-            if (username && password && role) {
-                if (role === 'admin') {
-                    window.location.href = 'admin.html';
-                } else if (role === 'client') {
-                    window.location.href = 'client.html';
-                }
-            } else {
-                alert('Por favor completa todos los campos');
-            }
-        });
-    </script>
+    <!-- Scripts -->
+    <script src="js/login.js"></script>
 </body>
 </html>
