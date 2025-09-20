@@ -27,6 +27,9 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: #f9f9f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Header */
@@ -89,6 +92,11 @@ nav a::after {
 
 nav a:hover::after {
     width: 100%;
+}
+
+/* Main content */
+main {
+    flex: 1;
 }
 
 /* Bloques de Acción */
@@ -432,6 +440,214 @@ footer {
 
 footer p {
     margin-bottom: 0.5rem;
+}
+
+/* Estilos para ver-estado-equipo.html */
+.estado-equipo-section {
+    padding: 4rem 2rem;
+    background-color: #f9f9f9;
+    min-height: calc(100vh - 200px);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.estado-equipo-section h1 {
+    text-align: center;
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.estado-equipo-section > .container > p {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+}
+
+.consulta-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.consulta-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.consulta-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.consulta-form select,
+.consulta-form input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.consulta-form select:focus,
+.consulta-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(142, 140, 83, 0.1);
+}
+
+.resultado-estado {
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.estado-card {
+    padding: 2rem;
+}
+
+.estado-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.info-equipo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: var(--light-color);
+    border-radius: 8px;
+}
+
+.info-equipo p {
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-equipo strong {
+    color: var(--dark-color);
+}
+
+.estado-badge {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.progreso-reparacion h4 {
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #ddd;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -2rem;
+    top: 0.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #ddd;
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+}
+
+.timeline-item.completed .timeline-marker {
+    background-color: var(--primary-color);
+}
+
+.timeline-item.current .timeline-marker {
+    background-color: var(--accent-color);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+}
+
+.timeline-content h5 {
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.timeline-content p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.notas-tecnico {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: var(--light-color);
+    border-radius: 8px;
+}
+
+.notas-tecnico h4 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.contacto-info {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #e8f5e8;
+    border-left: 4px solid var(--primary-color);
+    border-radius: 4px;
+}
+
+.mensaje-error {
+    background: #ffe6e6;
+    color: #d32f2f;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #ffcdd2;
+}
+
+.mensaje-error p {
+    margin-bottom: 1rem;
 }
 
 /* Responsive */
