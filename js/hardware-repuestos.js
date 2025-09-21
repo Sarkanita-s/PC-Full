@@ -406,9 +406,52 @@ function generarOrdenCompra() {
 }
 
 function contactarProveedor() {
-    alert('Abriendo sistema de contacto con proveedores...\n(Funcionalidad pendiente de implementar)');
+    // Buscar los 5 precios más bajos en la web para cada repuesto del carrito
+    let compras = JSON.parse(localStorage.getItem('compras_pendientes') || '[]');
+    if (compras.length === 0) {
+        alert('No hay repuestos en el carrito para comparar precios.');
+        return;
+    }
+    let comparaciones = [];
+    let pendientes = compras.length;
+    compras.forEach((compra, idx) => {
+        compararPreciosWeb(compra.nombre, function(resultados) {
+            comparaciones[idx] = { nombre: compra.nombre, resultados };
+            pendientes--;
+            if (pendientes === 0) mostrarComparacionPrecios(comparaciones);
+        });
+    });
 }
 
+// Simulación de búsqueda web: en producción, esto se haría con una API real o scraping
+function compararPreciosWeb(nombre, callback) {
+    // Simular resultados con precios aleatorios y tiendas ficticias
+    const tiendas = ['MercadoLibre', 'PC Factory', 'SP Digital', 'Weplay', 'Amazon', 'Linio', 'Paris', 'Ripley'];
+    let resultados = [];
+    for (let i = 0; i < 8; i++) {
+        resultados.push({
+            tienda: tiendas[i],
+            precio: Math.floor(Math.random() * 100000) + 20000,
+            url: `https://www.${tiendas[i].replace(/\s/g,'').toLowerCase()}.cl/buscar?q=${encodeURIComponent(nombre)}`
+        });
+    }
+    resultados.sort((a, b) => a.precio - b.precio);
+    callback(resultados.slice(0, 5));
+}
+
+function mostrarComparacionPrecios(comparaciones) {
+    let html = '<h3>Comparación de Precios Web</h3>';
+    comparaciones.forEach(comp => {
+        html += `<h4>${comp.nombre}</h4><ol>`;
+        comp.resultados.forEach(r => {
+            html += `<li><a href="${r.url}" target="_blank">${r.tienda}</a>: $${r.precio.toLocaleString('es-CL')}</li>`;
+        });
+        html += '</ol>';
+    });
+    // Mostrar en modal o ventana nueva
+    const w = window.open('', '_blank', 'width=600,height=700');
+    w.document.write('<html><head><title>Comparación de Precios</title></head><body>' + html + '</body></html>');
+}
 function exportarInventario() {
     alert('Exportando inventario completo...\n(Funcionalidad de exportación pendiente)');
 }
