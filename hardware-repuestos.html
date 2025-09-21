@@ -24,6 +24,26 @@
 
     <main>
         <div class="hardware-container">
+            <!-- Órdenes con Cambio de Piezas -->
+            <div class="ordenes-cambio-section">
+                <h3>🔄 Órdenes con Cambio de Piezas (Mantención/Actualización)</h3>
+                <div class="tabla-container">
+                    <table class="tabla-hardware">
+                        <thead>
+                            <tr>
+                                <th>N° Orden</th>
+                                <th>Cliente</th>
+                                <th>Equipo</th>
+                                <th>Descripción</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordenesCambioPiezasBody">
+                            <!-- Se carga dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="hardware-header">
                 <h1>Gestión de Hardware y Repuestos</h1>
                 <p>Control de inventario, repuestos críticos y compras pendientes</p>
@@ -207,5 +227,6 @@
 
     <!-- Scripts -->
     <script src="js/hardware-repuestos.js"></script>
+    <script src="js/ordenes-mantencion.js"></script>
 </body>
 </html>
