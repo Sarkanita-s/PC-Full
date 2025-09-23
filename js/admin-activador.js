@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 adminLoginLink.classList.remove('visible');
             }, 5000); 
+            //hola
         }
     });
 });
