@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal - Equipo de Ventas - PC Full</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span>PC Full - Panel de Ventas</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="mostrarAyuda()">Ayuda</a></li>
+                    <li><a href="client.html">Ver Sitio Público</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="menu-ventas-container">
+            <div class="menu-header">
+                <h1>Sistema de Gestión PC Full</h1>
+                <p>Panel de control para el equipo de ventas</p>
+            </div>
+
+            <div class="user-info">
+                <div>
+                    <strong>Bienvenido:</strong> <span id="usuarioActual">Usuario</span> |
+                    <span id="fechaActual"></span>
+                </div>
+                <button class="logout-btn" onclick="cerrarSesion()">Cerrar Sesión</button>
+            </div>
+
+            <div class="menu-grid">
+                <!-- Botón 1: Ingreso de Solicitudes -->
+                <div class="menu-item disponible" onclick="irAIngresarSolicitud()">
+                    <div class="icon">📝</div>
+                    <h3>Ingreso de Solicitudes</h3>
+                    <p>Registrar nuevas solicitudes de servicio técnico. Gestionar información de clientes y equipos.</p>
+                </div>
+
+                <!-- Botón 2: Hardware/Repuestos -->
+                <div class="menu-item disponible" onclick="irAHardware()">
+                    <div class="icon">🔧</div>
+                    <h3>Gestión de Hardware</h3>
+                    <p>Ver y gestionar repuestos necesarios. Control de inventario y compras pendientes.</p>
+                </div>
+
+                <!-- Botón 3: Próximamente -->
+                <div class="menu-item proximamente" onclick="mostrarProximamente('Reportes')">
+                    <div class="icon">📊</div>
+                    <h3>Reportes y Estadísticas</h3>
+                    <p>Generar reportes de ventas, servicios y estadísticas del negocio. (Próximamente)</p>
+                </div>
+
+                <!-- Botón 4: Próximamente -->
+                <div class="menu-item proximamente" onclick="mostrarProximamente('Clientes')">
+                    <div class="icon">👥</div>
+                    <h3>Gestión de Clientes</h3>
+                    <p>Administrar base de datos de clientes y historial de servicios. (Próximamente)</p>
+                </div>
+            </div>
+
+            <!-- Panel de información adicional -->
+            <div class="info-panels" style="margin-top: 3rem;">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4>Solicitudes Pendientes</h4>
+                        <div class="stat-number" id="solicitudesPendientes">--</div>
+                        <p>Servicios en proceso</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Repuestos Críticos</h4>
+                        <div class="stat-number" id="repuestosCriticos">--</div>
+                        <p>Requieren atención</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>Órdenes Hoy</h4>
+                        <div class="stat-number" id="ordenesHoy">--</div>
+                        <p>Nuevas solicitudes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 PC Full. Todos los derechos reservados.</p>
+        <p>Panel de Gestión Interna - Equipo de Ventas</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/menu-ventas.js"></script>
+</body>
+</html>

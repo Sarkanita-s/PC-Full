@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Full - Ingresar Solicitud</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        .input-with-button {
+            display: flex;
+            gap: 10px;
+        }
+        .input-with-button input {
+            flex-grow: 1;
+        }
+        .repuesto-item {
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span>💻 PC Full - Ingresar Solicitud</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="volverMenu()">← Volver al Menú</a></li>
+                    <li><a href="#" onclick="limpiarFormulario()">Limpiar Formulario</a></li>
+                    <li><a href="#" onclick="guardarBorrador()">Guardar Borrador</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <form id="solicitudForm">
+                <section class="form-section">
+                    <h3>Información del Cliente</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clienteNombre">Nombre Completo*</label>
+                            <input type="text" id="clienteNombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clienteRut">RUT*</label>
+                            <input type="text" id="clienteRut" placeholder="Ej: 12345678-9" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clienteTelefono">Teléfono*</label>
+                            <input type="tel" id="clienteTelefono" placeholder="Ej: +56 9 1234 5678" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clienteEmail">Correo Electrónico</label>
+                            <input type="email" id="clienteEmail">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="clienteDireccion">Dirección</label>
+                        <input type="text" id="clienteDireccion">
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h3>Información del Equipo</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="equipoTipo">Tipo de Equipo*</label>
+                            <select id="equipoTipo" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="notebook">Notebook</option>
+                                <option value="pc-escritorio">PC de Escritorio</option>
+                                <option value="servidor">Servidor</option>
+                                <option value="monitor">Monitor</option>
+                                <option value="impresora">Impresora</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="equipoMarca">Marca*</label>
+                            <input type="text" id="equipoMarca" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="equipoModelo">Modelo</label>
+                            <input type="text" id="equipoModelo">
+                        </div>
+                        <div class="form-group">
+                            <label for="equipoSerial">N° de Serie</label>
+                            <input type="text" id="equipoSerial">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="equipoAccesorios">Accesorios Incluidos</label>
+                        <textarea id="equipoAccesorios" rows="2" placeholder="Ej: Cargador, mouse, teclado, etc."></textarea>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h3>Detalles del Servicio</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tipoServicio">Tipo de Servicio*</label>
+                            <select id="tipoServicio" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="reparacion">Reparación</option>
+                                <option value="mantencion">Mantención Preventiva</option>
+                                <option value="actualizacion">Actualización de Componentes</option>
+                                <option value="diagnostico">Solo Diagnóstico</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="prioridad">Prioridad*</label>
+                            <select id="prioridad" required>
+                                <option value="normal">Normal</option>
+                                <option value="alta">Alta</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="problemaDescripcion">Descripción del Problema*</label>
+                        <textarea id="problemaDescripcion" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="sintomas">Síntomas del equipo (ej: no enciende, se reinicia, etc.):</label>
+                        <textarea id="sintomas" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="observaciones">Observaciones adicionales:</label>
+                        <textarea id="observaciones" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="repuestosNecesariosInput">Repuestos Necesarios (opcional):</label>
+                        <div class="input-with-button">
+                            <input type="text" id="repuestosNecesariosInput" placeholder="Ej: Placa madre B550, Disco SSD 500GB">
+                            <button type="button" class="btn-secondary" onclick="agregarRepuestoManual()">+</button>
+                        </div>
+                    </div>
+                    <div id="listaRepuestosNecesarios">
+                        </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fechaEntrega">Fecha Estimada de Entrega</label>
+                            <input type="date" id="fechaEntrega">
+                        </div>
+                        <div class="form-group">
+                            <label for="costoEstimado">Costo Estimado ($)</label>
+                            <input type="number" id="costoEstimado" min="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="garantia">
+                            <input type="checkbox" id="garantia"> ¿Es servicio de garantía?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="abono">
+                            <input type="checkbox" id="abono"> Abono Inicial
+                        </label>
+                        <div id="abonoCantidadGroup" style="display: none;">
+                            <label for="abonoCantidad">Monto del Abono ($)</label>
+                            <input type="number" id="abonoCantidad" min="0" disabled>
+                        </div>
+                    </div>
+                </section>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Ingresar Solicitud</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div id="modalConfirmacion" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>✅ Solicitud Ingresada Correctamente</h3>
+            <p>El número de orden es: <span id="numeroOrdenGenerado"></span></p>
+            <div class="modal-actions">
+                <button onclick="imprimirSolicitud()" class="btn-secondary">Imprimir</button>
+                <button onclick="nuevaSolicitud()" class="btn-primary">Ingresar Nueva Solicitud</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2024 PC Full. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/ingresar-solicitud.js"></script>
+</body>
+</html>
