@@ -1,6 +1,3 @@
-// Funciones para hardware-repuestos.html
-
-// Datos de ejemplo para repuestos
 let repuestosData = [
     {
         codigo: 'CPU001',
@@ -86,44 +83,28 @@ let repuestosData = [
 
 let repuestosFiltrados = [...repuestosData];
 
+
+let comprasSolicitadas = JSON.parse(localStorage.getItem('compras_solicitadas')) || [];
+
 document.addEventListener('DOMContentLoaded', function() {
-    // verificarAutenticacion(); // Comentado para permitir acceso libre
+    
     initializeHardwareModule();
     cargarTablaRepuestos();
     actualizarEstadisticas();
-    cargarComprasPendientes();
+    cargarListaComprasSolicitadas(); 
 });
 
 function verificarAutenticacion() {
-    // Función deshabilitada para permitir acceso libre a la página
-    /*
-    const usuarioLogueado = localStorage.getItem('usuario_logueado');
     
-    if (!usuarioLogueado) {
-        alert('Acceso no autorizado. Redirigiendo al login...');
-        window.location.href = 'login.html';
-        return;
-    }
-    
-    const userData = JSON.parse(usuarioLogueado);
-    
-    if (userData.role !== 'ventas') {
-        alert('No tienes permisos para acceder a esta sección.');
-        window.location.href = 'login.html';
-        return;
-    }
-    */
 }
 
 function initializeHardwareModule() {
-    // Cargar datos guardados si existen
     const datosGuardados = localStorage.getItem('repuestos_data');
     if (datosGuardados) {
         repuestosData = JSON.parse(datosGuardados);
         repuestosFiltrados = [...repuestosData];
     }
     
-    // Configurar formulario modal
     document.getElementById('formRepuesto').addEventListener('submit', function(e) {
         e.preventDefault();
         guardarRepuesto();
@@ -252,7 +233,6 @@ function cargarDatosEnModal(repuesto) {
     document.getElementById('modalMinimo').value = repuesto.minimo;
     document.getElementById('modalPrecio').value = repuesto.precio;
     
-    // Deshabilitar edición del código
     document.getElementById('modalCodigo').readOnly = true;
 }
 
@@ -272,7 +252,6 @@ function guardarRepuesto() {
         precio: parseFloat(document.getElementById('modalPrecio').value) || 0
     };
     
-    // Determinar estado basado en stock
     if (datos.stock === 0) {
         datos.estado = 'agotado';
     } else if (datos.stock <= datos.minimo) {
@@ -281,7 +260,6 @@ function guardarRepuesto() {
         datos.estado = 'disponible';
     }
     
-    // Verificar si es nuevo o edición
     const indice = repuestosData.findIndex(r => r.codigo === datos.codigo);
     
     if (indice >= 0) {
@@ -290,13 +268,12 @@ function guardarRepuesto() {
         repuestosData.push(datos);
     }
     
-    // Guardar en localStorage
     localStorage.setItem('repuestos_data', JSON.stringify(repuestosData));
     
     cerrarModal();
     filtrarRepuestos();
     actualizarEstadisticas();
-    cargarComprasPendientes();
+    cargarListaComprasSolicitadas(); 
     
     alert('Repuesto guardado exitosamente.');
 }
@@ -314,7 +291,7 @@ function marcarCritico(codigo) {
     
     filtrarRepuestos();
     actualizarEstadisticas();
-    cargarComprasPendientes();
+    cargarListaComprasSolicitadas(); 
     
     alert(`${repuesto.nombre} marcado como crítico.`);
 }
@@ -329,7 +306,7 @@ function solicitarCompra(codigo) {
         repuesto.estado = 'pedido';
         localStorage.setItem('repuestos_data', JSON.stringify(repuestosData));
         
-        // Simular agregado a lista de compras
+        
         let compras = JSON.parse(localStorage.getItem('compras_pendientes') || '[]');
         compras.push({
             codigo: repuesto.codigo,
@@ -345,113 +322,95 @@ function solicitarCompra(codigo) {
         
         filtrarRepuestos();
         actualizarEstadisticas();
-        cargarComprasPendientes();
+        cargarListaComprasSolicitadas(); 
         
         alert(`Solicitud de compra creada: ${cantidad} unidades de ${repuesto.nombre}`);
     }
 }
 
-function cargarComprasPendientes() {
-    const compras = JSON.parse(localStorage.getItem('compras_pendientes') || '[]');
+
+function cargarListaComprasSolicitadas() {
+    const tbody = document.getElementById('comprasSolicitadasBody');
+    tbody.innerHTML = '';
     
-    const urgentes = compras.filter(c => c.urgente);
-    const normales = compras.filter(c => !c.urgente);
-    
-    cargarListaCompras('comprasUrgentes', urgentes);
-    cargarListaCompras('comprasProgramadas', normales);
+    comprasSolicitadas.forEach((compra, index) => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${compra.repuesto}</td>
+            <td>${compra.proveedor || ''}</td>
+            <td>${compra.direccion || ''}</td>
+            <td>${compra.valor ? '$' + compra.valor.toLocaleString('es-CL') : ''}</td>
+            <td class="acciones">
+                <button onclick="editarItemCompra(${index})" class="btn-icon" title="Editar">✏️</button>
+                <button onclick="eliminarItemCompra(${index})" class="btn-icon" title="Eliminar">🗑️</button>
+            </td>
+        `;
+        tbody.appendChild(fila);
+    });
 }
 
-function cargarListaCompras(containerId, compras) {
-    const container = document.getElementById(containerId);
-    
-    if (compras.length === 0) {
-        container.innerHTML = '<p>No hay compras pendientes.</p>';
+function agregarRepuestoACompra() {
+    const repuesto = document.getElementById('inputRepuesto').value.trim();
+    const proveedor = document.getElementById('inputProveedor').value.trim();
+    const direccion = document.getElementById('inputDireccion').value.trim();
+    const valor = parseFloat(document.getElementById('inputValor').value);
+
+    if (!repuesto) {
+        alert('El nombre del repuesto es obligatorio.');
         return;
     }
     
-    container.innerHTML = compras.map(compra => `
-        <div class="compra-item">
-            <div class="compra-info">
-                <strong>${compra.nombre}</strong>
-                <span class="compra-cantidad">Cantidad: ${compra.cantidad}</span>
-                <span class="compra-proveedor">Proveedor: ${compra.proveedor}</span>
-                <span class="compra-total">Total: $${compra.total.toLocaleString('es-CL')}</span>
-            </div>
-            <button onclick="eliminarCompra('${compra.codigo}')" class="btn-eliminar">❌</button>
-        </div>
-    `).join('');
+    comprasSolicitadas.push({
+        repuesto,
+        proveedor,
+        direccion,
+        valor
+    });
+    
+    guardarYRecargarCompras();
+    limpiarFormularioCompra();
 }
 
-function eliminarCompra(codigo) {
-    if (confirm('¿Estás seguro que deseas eliminar esta compra?')) {
-        let compras = JSON.parse(localStorage.getItem('compras_pendientes') || '[]');
-        compras = compras.filter(c => c.codigo !== codigo);
-        localStorage.setItem('compras_pendientes', JSON.stringify(compras));
-        
-        cargarComprasPendientes();
+function editarItemCompra(index) {
+    const compra = comprasSolicitadas[index];
+    
+    document.getElementById('inputRepuesto').value = compra.repuesto;
+    document.getElementById('inputProveedor').value = compra.proveedor;
+    document.getElementById('inputDireccion').value = compra.direccion;
+    document.getElementById('inputValor').value = compra.valor;
+    
+    eliminarItemCompra(index);
+}
+
+function eliminarItemCompra(index) {
+    if (confirm('¿Estás seguro que deseas eliminar este repuesto de la lista?')) {
+        comprasSolicitadas.splice(index, 1);
+        guardarYRecargarCompras();
     }
 }
+
+function guardarYRecargarCompras() {
+    localStorage.setItem('compras_solicitadas', JSON.stringify(comprasSolicitadas));
+    cargarListaComprasSolicitadas();
+}
+
+function limpiarFormularioCompra() {
+    document.getElementById('inputRepuesto').value = '';
+    document.getElementById('inputProveedor').value = '';
+    document.getElementById('inputDireccion').value = '';
+    document.getElementById('inputValor').value = '';
+}
+
+
 
 function generarOrdenCompra() {
-    const compras = JSON.parse(localStorage.getItem('compras_pendientes') || '[]');
-    
-    if (compras.length === 0) {
-        alert('No hay compras pendientes para generar una orden.');
-        return;
-    }
-    
-    const total = compras.reduce((sum, compra) => sum + compra.total, 0);
-    
-    alert(`Orden de compra generada:\n\nTotal de items: ${compras.length}\nMonto total: $${total.toLocaleString('es-CL')}\n\n(Funcionalidad de exportación pendiente)`);
+    alert('Generando orden de compra con la lista actual...');
 }
 
 function contactarProveedor() {
-    // Buscar los 5 precios más bajos en la web para cada repuesto del carrito
-    let compras = JSON.parse(localStorage.getItem('compras_pendientes') || '[]');
-    if (compras.length === 0) {
-        alert('No hay repuestos en el carrito para comparar precios.');
-        return;
-    }
-    let comparaciones = [];
-    let pendientes = compras.length;
-    compras.forEach((compra, idx) => {
-        compararPreciosWeb(compra.nombre, function(resultados) {
-            comparaciones[idx] = { nombre: compra.nombre, resultados };
-            pendientes--;
-            if (pendientes === 0) mostrarComparacionPrecios(comparaciones);
-        });
-    });
+    alert('Abriendo sistema de contacto con proveedores...\n(Funcionalidad pendiente de implementar)');
 }
 
-// Simulación de búsqueda web: en producción, esto se haría con una API real o scraping
-function compararPreciosWeb(nombre, callback) {
-    // Simular resultados con precios aleatorios y tiendas ficticias
-    const tiendas = ['MercadoLibre', 'PC Factory', 'SP Digital', 'Weplay', 'Amazon', 'Linio', 'Paris', 'Ripley'];
-    let resultados = [];
-    for (let i = 0; i < 8; i++) {
-        resultados.push({
-            tienda: tiendas[i],
-            precio: Math.floor(Math.random() * 100000) + 20000,
-            url: `https://www.${tiendas[i].replace(/\s/g,'').toLowerCase()}.cl/buscar?q=${encodeURIComponent(nombre)}`
-        });
-    }
-    resultados.sort((a, b) => a.precio - b.precio);
-    callback(resultados.slice(0, 5));
-}
-
-function mostrarComparacionPrecios(comparaciones) {
-    let html = '<h3>Comparación de Precios Web</h3>';
-    comparaciones.forEach(comp => {
-        html += `<h4>${comp.nombre}</h4><ol>`;
-        comp.resultados.forEach(r => {
-            html += `<li><a href="${r.url}" target="_blank">${r.tienda}</a>: $${r.precio.toLocaleString('es-CL')}</li>`;
-        });
-        html += '</ol>';
-    });
-    // Mostrar en modal o ventana nueva
-    const w = window.open('', '_blank', 'width=600,height=700');
-    w.document.write('<html><head><title>Comparación de Precios</title></head><body>' + html + '</body></html>');
-}
 function exportarInventario() {
     alert('Exportando inventario completo...\n(Funcionalidad de exportación pendiente)');
 }

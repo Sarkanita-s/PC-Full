@@ -1,50 +1,79 @@
-// Funciones para ingresar-solicitud.html
-
 document.addEventListener('DOMContentLoaded', function() {
-    // verificarAutenticacion(); // Comentado para permitir acceso libre
+    
     initializeSolicitudForm();
     cargarBorradorSiExiste();
 });
 
 function verificarAutenticacion() {
-    // Función deshabilitada para permitir acceso libre a la página
-    /*
-    const usuarioLogueado = localStorage.getItem('usuario_logueado');
     
-    if (!usuarioLogueado) {
-        alert('Acceso no autorizado. Redirigiendo al login...');
-        window.location.href = 'login.html';
-        return;
+}
+
+
+let repuestosSolicitud = [];
+
+
+function agregarRepuestoManual() {
+    const input = document.getElementById('repuestosNecesariosInput');
+    const repuesto = input.value.trim();
+    if (repuesto) {
+        repuestosSolicitud.push(repuesto);
+        input.value = '';
+        actualizarListaRepuestos();
     }
+}
+
+
+function actualizarListaRepuestos() {
+    const lista = document.getElementById('listaRepuestosNecesarios');
+    lista.innerHTML = repuestosSolicitud.map(rep => `<div class="repuesto-item">${rep}</div>`).join('');
+}
+
+
+function obtenerDatosFormulario() {
+    return {
+        
+        servicio: {
+            
+            repuestos: repuestosSolicitud, 
+        },
+        fechaCreacion: new Date().toISOString(),
+        usuario: JSON.parse(localStorage.getItem('usuario_logueado')).username
+    };
+}
+
+
+function guardarBorrador() {
+    const datos = obtenerDatosFormulario();
     
-    const userData = JSON.parse(usuarioLogueado);
-    
-    if (userData.role !== 'ventas') {
-        alert('No tienes permisos para acceder a esta sección.');
-        window.location.href = 'login.html';
-        return;
-    }
-    */
+    datos.servicio.repuestos = repuestosSolicitud;
+    localStorage.setItem('solicitud_borrador', JSON.stringify(datos));
+    alert('Borrador guardado exitosamente.');
+}
+
+
+function cargarBorrador(datos) {
+    repuestosSolicitud = datos.servicio.repuestos || [];
+    actualizarListaRepuestos();
 }
 
 function initializeSolicitudForm() {
     const form = document.getElementById('solicitudForm');
     
-    // Configurar fecha mínima para entrega (hoy)
+    
     const hoy = new Date().toISOString().split('T')[0];
     document.getElementById('fechaEntrega').min = hoy;
     
-    // Formatear RUT mientras se escribe
+    
     document.getElementById('clienteRut').addEventListener('input', function(e) {
         formatearRUT(e.target);
     });
     
-    // Formatear teléfono
+    
     document.getElementById('clienteTelefono').addEventListener('input', function(e) {
         formatearTelefono(e.target);
     });
     
-    // Lógica para mostrar/ocultar y habilitar/deshabilitar el campo de abono
+    
     const abonoCheckbox = document.getElementById('abono');
     const abonoCantidadGroup = document.getElementById('abonoCantidadGroup');
     const abonoCantidadInput = document.getElementById('abonoCantidad');
@@ -60,13 +89,13 @@ function initializeSolicitudForm() {
         }
     });
 
-    // Submisión del formulario
+    
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         procesarSolicitud();
     });
 
-    // Auto-guardar cada 2 minutos
+    
     setInterval(guardarBorradorAuto, 120000);
 }
 
@@ -94,13 +123,13 @@ function procesarSolicitud() {
     const formData = obtenerDatosFormulario();
     const numeroOrden = generarNumeroOrden();
     
-    // Simular guardado en base de datos
+    
     guardarSolicitud(formData, numeroOrden);
     
-    // Mostrar modal de confirmación
+    
     mostrarModalConfirmacion(numeroOrden);
     
-    // Limpiar borrador
+   
     localStorage.removeItem('solicitud_borrador');
 }
 
@@ -119,7 +148,7 @@ function validarFormulario() {
             return false;
         }
     }
-    // Si abono está seleccionado, validar que el monto no esté vacío ni sea negativo
+    
     const abonoCheckbox = document.getElementById('abono');
     const abonoCantidadInput = document.getElementById('abonoCantidad');
     if (abonoCheckbox.checked) {
@@ -130,7 +159,7 @@ function validarFormulario() {
         }
     }
     
-    // Validar formato de RUT
+    
     const rut = document.getElementById('clienteRut').value;
     if (!validarRUT(rut)) {
         alert('El formato del RUT no es válido.');
@@ -184,7 +213,7 @@ function generarNumeroOrden() {
 }
 
 function guardarSolicitud(datos, numeroOrden) {
-    // Simular guardado en base de datos
+    
     let solicitudes = JSON.parse(localStorage.getItem('solicitudes_guardadas') || '[]');
     
     datos.numeroOrden = numeroOrden;
@@ -208,7 +237,7 @@ function guardarBorrador() {
 }
 
 function guardarBorradorAuto() {
-    // Solo guardar si hay datos en el formulario
+    
     const nombre = document.getElementById('clienteNombre').value.trim();
     if (nombre) {
         const datos = obtenerDatosFormulario();
@@ -227,21 +256,21 @@ function cargarBorradorSiExiste() {
 }
 
 function cargarBorrador(datos) {
-    // Cargar datos del cliente
+    
     document.getElementById('clienteNombre').value = datos.cliente.nombre || '';
     document.getElementById('clienteRut').value = datos.cliente.rut || '';
     document.getElementById('clienteTelefono').value = datos.cliente.telefono || '';
     document.getElementById('clienteEmail').value = datos.cliente.email || '';
     document.getElementById('clienteDireccion').value = datos.cliente.direccion || '';
     
-    // Cargar datos del equipo
+    
     document.getElementById('equipoTipo').value = datos.equipo.tipo || '';
     document.getElementById('equipoMarca').value = datos.equipo.marca || '';
     document.getElementById('equipoModelo').value = datos.equipo.modelo || '';
     document.getElementById('equipoSerial').value = datos.equipo.serial || '';
     document.getElementById('equipoAccesorios').value = datos.equipo.accesorios || '';
     
-    // Cargar datos del servicio
+    
     document.getElementById('tipoServicio').value = datos.servicio.tipo || '';
     document.getElementById('prioridad').value = datos.servicio.prioridad || '';
     document.getElementById('problemaDescripcion').value = datos.servicio.descripcion || '';

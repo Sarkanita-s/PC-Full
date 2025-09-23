@@ -22,9 +22,8 @@
             <div class="action-blocks">
                 <a href="whatsapp" class="blockwsp">WhatsApp</a>
                 <a href="ver-estado-equipo.html" class="blockest">Ver estado</a>
-                <!-- ver el estado de mi equipo (Para pagina comercial se pide el estado del equipo con el numero de orden; si se pierde puede pedirlo por RUT) -->
-                <a href="login.html" class="blocklgn">Iniciar Sesión</a>
-                <!-- Iniciar sesión: que no lo vea el usuario cliente (solamente para usuarios que tienen cuenta, botón oculto) -->
+                <a href="login.html" class="blocklgn" id="adminLoginLink">Iniciar Sesión</a>
+                
             </div>
         </div>
     </header>
@@ -36,7 +35,7 @@
                 <p>Reparación, mantenimiento y optimización de equipos con garantía y calidad</p>
                 <div class="hero-buttons">
                     <a href="#solicitar" class="btn btn-primary">Solicitar Servicio</a>
-                    <a href="#servicios" class="btn btn-outline" style="color: var(--primary-color); border-color: var(--primary-color);">Ver Servicios</a>
+                    <a href="#servicios" class="btn btn-outline">Ver Servicios</a>
                 </div>
 
                 <div class="hero-image">
@@ -49,23 +48,44 @@
         <section id="servicios">
             <h2>Nuestros Servicios</h2>
             <div class="services-grid">
-                Mantencion General,
-                Eliminación de virus,
-                Actualizaciones de sistema operativo,
-                Formateo,
-                Respaldos,
-                Instalación de software,
-                Instalación de sistema operativo (si es que lo quiere cambiar): elegir cual,
-                Problemas de hardware: describir,
-                Sobrecalentamiento
+                <p>💻Instalación de sistema operativo (si es que lo quiere cambiar): elegir cual.</p>
+                <p>🖥️Actualizaciones de sistema operativo.</p>
+                <p>⚙️Problemas de hardware: describir.</p>
+                <p>📦Instalación de software.</p>
+                <p>🦠Eliminación de virus.</p>
+                <p>🔧Mantencion General.</p>
+                <p>🔥Sobrecalentamiento.</p>
+                <p>💽Formateo.</p>
+                <p>📂Respaldos.</p>
             </div>
             <p></p>
         </section>
 
         <section id="contacto">
             <h2>Contacto</h2>
-            <p>Agregar mapa y los contactos de P    C FULL</p>
+            <div class="contacto-container">
+                
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3326.980995403512!2d-70.65732042430697!3d-33.50187157336922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662dac50b48e4d1%3A0xaea2e1bc15f83a81!2sGran%20Av.%20Jos%C3%A9%20Miguel%20Carrera%205287%2C%208920187%20San%20Miguel%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses-419!2scl!4v1758583995591!5m2!1ses-419!2scl" 
+                     width="400" 
+                     height="300" 
+                     style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+
+                
+                <img src="img/pcfull-local.png" alt="Logo PC Full" width="300">
+            </div>
+            <div class="contacto-info">
+                <p>METRO DEPARTAMENTAL</p>
+                <p>📍GRAN AVENIDA J.M. CARRERA 5287, SAN MIGUEL</p>
+                <p>☎️Fono: 225221603 </p>
+                <p>📱 WhatsApp: +569 5412 8451</p>
+                <p>✉️   Email: pcfullsanmiguel@gmail.com</p>
+            </div>
         </section>
+
 
         <section id="clientes">
             <h2>Área Clientes</h2>
@@ -74,8 +94,9 @@
 
     <footer class="footer">
         <p>&copy; 2024 PC Full. Todos los derechos reservados.</p>
-        <p>Contacto: </p>
+        
 
     </footer>
+    <script src="js/admin-activador.js"></script>
 </body>
 </html>

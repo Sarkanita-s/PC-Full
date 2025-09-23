@@ -48,18 +48,12 @@ header {
 
 .logo h1 {
     font-size: 1.8rem;
-    /* background: var(--text-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent; */
+  
 }
 
 .logo-icon {
     font-size: 2rem;
-    /* background: var(--text-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent; */
+    
 }
 
 nav ul {

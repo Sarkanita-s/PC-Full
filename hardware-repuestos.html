@@ -24,7 +24,6 @@
 
     <main>
         <div class="hardware-container">
-            <!-- Órdenes con Cambio de Piezas -->
             <div class="ordenes-cambio-section">
                 <h3>🔄 Órdenes con Cambio de Piezas (Mantención/Actualización)</h3>
                 <div class="tabla-container">
@@ -39,8 +38,7 @@
                             </tr>
                         </thead>
                         <tbody id="ordenesCambioPiezasBody">
-                            <!-- Se carga dinámicamente -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </div>
@@ -49,7 +47,6 @@
                 <p>Control de inventario, repuestos críticos y compras pendientes</p>
             </div>
 
-            <!-- Filtros y Búsqueda -->
             <div class="filtros-section">
                 <div class="filtros-container">
                     <div class="filtro-group">
@@ -88,7 +85,6 @@
                 </div>
             </div>
 
-            <!-- Estadísticas Rápidas -->
             <div class="stats-hardware">
                 <div class="stat-card critico">
                     <h4>Repuestos Críticos</h4>
@@ -112,7 +108,6 @@
                 </div>
             </div>
 
-            <!-- Tabla de Repuestos -->
             <div class="tabla-container">
                 <table id="tablaRepuestos" class="tabla-hardware">
                     <thead>
@@ -129,36 +124,41 @@
                         </tr>
                     </thead>
                     <tbody id="tablaRepuestosBody">
-                        <!-- Los datos se cargan dinámicamente -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
 
-            <!-- Sección de Compras Pendientes -->
             <div class="compras-section">
-                <h3>🛒 Compras Pendientes</h3>
-                <div class="compras-container">
-                    <div class="compra-urgente">
-                        <h4>Compras Urgentes</h4>
-                        <div id="comprasUrgentes" class="lista-compras">
-                            <!-- Se carga dinámicamente -->
-                        </div>
-                    </div>
-                    <div class="compra-normal">
-                        <h4>Compras Programadas</h4>
-                        <div id="comprasProgramadas" class="lista-compras">
-                            <!-- Se carga dinámicamente -->
-                        </div>
-                    </div>
+                <h3>🛒 Repuestos Solicitados para Compra</h3>
+                <p>Usa este formulario para agregar los repuestos que necesitan ser comprados. Puedes editar o eliminar los elementos de la lista.</p>
+
+                <div class="form-section form-inline">
+                    <input type="text" id="inputRepuesto" placeholder="Nombre del Repuesto" required>
+                    <input type="text" id="inputProveedor" placeholder="Proveedor">
+                    <input type="text" id="inputDireccion" placeholder="Dirección">
+                    <input type="number" id="inputValor" placeholder="Valor ($)" min="0">
+                    <button type="button" class="btn-primary" onclick="agregarRepuestoACompra()">Agregar</button>
+                    <button type="button" class="btn-secondary" onclick="limpiarFormularioCompra()">Limpiar</button>
                 </div>
-                <div class="compras-actions">
-                    <button onclick="generarOrdenCompra()" class="btn-primary">Generar Orden de Compra</button>
-                    <button onclick="contactarProveedor()" class="btn-secondary">Contactar Proveedor</button>
+
+                <div class="tabla-container">
+                    <table class="tabla-hardware">
+                        <thead>
+                            <tr>
+                                <th>Repuesto</th>
+                                <th>Proveedor</th>
+                                <th>Dirección</th>
+                                <th>Valor ($)</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comprasSolicitadasBody">
+                            </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
-        <!-- Modal para Agregar/Editar Repuesto -->
         <div id="modalRepuesto" class="modal" style="display: none;">
             <div class="modal-content">
                 <h3 id="modalTitulo">Agregar Nuevo Repuesto</h3>
@@ -225,7 +225,6 @@
         <p>&copy; 2024 PC Full. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Scripts -->
     <script src="js/hardware-repuestos.js"></script>
     <script src="js/ordenes-mantencion.js"></script>
 </body>

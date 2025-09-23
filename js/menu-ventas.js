@@ -7,45 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function verificarAutenticacion() {
-    // Función deshabilitada para permitir acceso libre a la página
-    // Se puede reactivar más tarde si es necesario
-    /*
-    const usuarioLogueado = localStorage.getItem('usuario_logueado');
     
-    if (!usuarioLogueado) {
-        alert('Acceso no autorizado. Redirigiendo al login...');
-        setTimeout(() => {
-            window.location.href = 'login.html';
-        }, 1000);
-        return;
-    }
-    
-    const userData = JSON.parse(usuarioLogueado);
-    
-    if (userData.role !== 'ventas') {
-        alert('No tienes permisos para acceder a esta sección.');
-        setTimeout(() => {
-            window.location.href = 'login.html';
-        }, 1000);
-        return;
-    }
-    
-    // Verificar si la sesión no ha expirado (más permisivo)
-    const loginTime = new Date(userData.loginTime);
-    const now = new Date();
-    const horasTranscurridas = (now - loginTime) / (1000 * 60 * 60);
-    
-    if (horasTranscurridas > 24) { // Cambié de 8 a 24 horas para ser menos estricto
-        alert('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
-        localStorage.removeItem('usuario_logueado');
-        setTimeout(() => {
-            window.location.href = 'login.html';
-        }, 1000);
-        return;
-    }
-    */
-    
-    // Mostrar información del usuario (sin verificación)
     const usuarioLogueado = localStorage.getItem('usuario_logueado');
     if (usuarioLogueado) {
         const userData = JSON.parse(usuarioLogueado);

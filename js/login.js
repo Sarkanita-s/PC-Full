@@ -33,7 +33,7 @@ function initializeLogin() {
         autenticarUsuario(username, password, selectedRole);
     });
     
-    // Agregar enter key support
+    
     document.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             loginForm.dispatchEvent(new Event('submit'));
@@ -42,14 +42,14 @@ function initializeLogin() {
 }
 
 function autenticarUsuario(username, password, selectedRole) {
-    // Mostrar indicador de carga
+    
     mostrarCargando(true);
     
     setTimeout(() => {
         const usuario = usuarios[username.toLowerCase()];
         
         if (usuario && usuario.password === password && usuario.role === selectedRole) {
-            // Autenticación exitosa
+           
             localStorage.setItem('usuario_logueado', JSON.stringify({
                 username: username,
                 role: selectedRole,
@@ -146,40 +146,12 @@ function limpiarSesionCompleta() {
     console.log('Sesión y datos limpiados completamente');
 }
 
-// Verificar si el usuario ya está logueado
+
 function verificarSesionActiva() {
-    // Comentado para evitar bucles de redirección !!! CAMBIOS DE LUCES RAPIDOS ¡¡¡
-    // Se puede activar más tarde si es necesario
-    /*
-    const usuarioLogueado = localStorage.getItem('usuario_logueado');
-    if (usuarioLogueado) {
-        const userData = JSON.parse(usuarioLogueado);
-        const loginTime = new Date(userData.loginTime);
-        const now = new Date();
-        const horasTranscurridas = (now - loginTime) / (1000 * 60 * 60);
-        
-        // Si han pasado menos de 8 horas, mantener sesión activa
-        if (horasTranscurridas < 8) {
-            switch(userData.role) {
-                case 'admin':
-                    window.location.href = 'admin.html';
-                    break;
-                case 'ventas':
-                    window.location.href = 'menu-ventas.html';
-                    break;
-                case 'client':
-                    window.location.href = 'client.html';
-                    break;
-            }
-        } else {
-            // Sesión expirada
-            localStorage.removeItem('usuario_logueado');
-        }
-    }
-    */
+    
 }
 
-// Verificar sesión al cargar la página (deshabilitado temporalmente)
+
 document.addEventListener('DOMContentLoaded', function() {
-    // verificarSesionActiva(); // Comentado para evitar bucles
+    
 });
