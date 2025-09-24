@@ -1,0 +1,375 @@
+/* Contenedor principal que ocupa toda la pantalla */
+.login-container {
+    min-height: 100vh;               /* Altura completa de la ventana */
+    display: flex;
+    align-items: center;             /* Centrado vertical */
+    justify-content: center;         /* Centrado horizontal */
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); /* Gradiente de fondo */
+    padding: 2rem;                   /* Espaciado para dispositivos móviles */
+}
+
+/* Tarjeta centrada con el formulario de login */
+.login-card {
+    background: white;
+    padding: 3rem;
+    border-radius: var(--border-radius-large);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Sombra pronunciada */
+    width: 100%;
+    max-width: 400px;               /* Ancho máximo para mantener proporción */
+    text-align: center;
+    position: relative;
+    overflow: hidden;               /* Para efectos adicionales si se necesitan */
+}
+
+/* Efecto sutil de borde animado */
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+/* Contenedor del logo y título */
+.login-logo {
+    margin-bottom: 2rem;
+}
+
+/* Icono grande del logo */
+.login-logo span {
+    font-size: 4rem;               /* Icono prominente */
+    margin-bottom: 1rem;
+    display: block;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1)); /* Sombra sutil */
+}
+
+/* Título del sistema de login */
+.login-logo h2 {
+    color: var(--primary-color);
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-transform: uppercase;       /* Mayúsculas para formalidad */
+    letter-spacing: 1px;            /* Espaciado entre letras */
+}
+
+/* Grupos de campos con espaciado específico */
+.login-card .form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;               /* Alineación izquierda para etiquetas */
+}
+
+/* Etiquetas de campos específicas para login */
+.login-card label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    font-size: 0.95rem;
+    text-transform: uppercase;       /* Mayúsculas para consistencia */
+    letter-spacing: 0.5px;
+}
+
+/* Campos de entrada con estilo específico para login */
+.login-card input,
+.login-card select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: #fafafa;       /* Fondo ligeramente gris */
+}
+
+/* Estados focus con animación específica */
+.login-card input:focus,
+.login-card select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(142, 140, 83, 0.1); /* Sombra del color primario */
+    background-color: white;         /* Fondo blanco al enfocar */
+    transform: translateY(-1px);     /* Ligero movimiento hacia arriba */
+}
+
+/* Botón principal de inicio de sesión */
+.btn-login {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;       /* Mayúsculas para énfasis */
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;               /* Para efecto de onda si se desea */
+}
+
+/* Efecto hover del botón de login */
+.btn-login:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);     /* Elevación más pronunciada */
+    box-shadow: 0 5px 15px rgba(142, 140, 83, 0.3);
+}
+
+/* Estado activo del botón */
+.btn-login:active {
+    transform: translateY(0);        /* Regresa a posición original */
+    box-shadow: 0 2px 5px rgba(142, 140, 83, 0.2);
+}
+
+/* Estado deshabilitado del botón */
+.btn-login:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Contenedor de enlaces adicionales */
+.login-links {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    border-top: 1px solid #eee;     /* Separador visual */
+    padding-top: 1.5rem;
+}
+
+/* Párrafos de enlaces con espaciado */
+.login-links p {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+/* Enlaces con colores del tema */
+.login-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+    font-weight: 500;
+}
+
+/* Efecto hover en enlaces */
+.login-links a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+/* Campo con error de validación */
+.login-card .form-group.error input,
+.login-card .form-group.error select {
+    border-color: var(--accent-color);
+    background-color: #fff5f5;       /* Fondo rojizo muy sutil */
+}
+
+/* Campo válido */
+.login-card .form-group.success input,
+.login-card .form-group.success select {
+    border-color: #27ae60;          /* Verde para indicar validez */
+    background-color: #f8fff8;       /* Fondo verdoso muy sutil */
+}
+
+/* Mensaje de error */
+.error-message {
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Icono de error */
+.error-message::before {
+    content: '⚠️';
+    font-size: 0.9rem;
+}
+
+/* Mensaje de éxito */
+.success-message {
+    color: #27ae60;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Icono de éxito */
+.success-message::before {
+    content: '✅';
+    font-size: 0.9rem;
+}
+
+/* Overlay de carga para la card */
+.login-card.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 10;
+}
+
+/* Spinner de carga específico para login */
+.login-card.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: -20px;
+    margin-top: -20px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: login-spin 1s linear infinite;
+    z-index: 11;
+}
+
+/* Animación del spinner de login */
+@keyframes login-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsividad */
+
+@media (max-width: 768px) {
+    /* Container con menos padding */
+    .login-container {
+        padding: 1rem;
+    }
+    
+    /* Card más compacta */
+    .login-card {
+        padding: 2rem;
+        max-width: 350px;
+    }
+    
+    /* Logo más pequeño */
+    .login-logo span {
+        font-size: 3rem;
+    }
+    
+    /* Título más pequeño */
+    .login-logo h2 {
+        font-size: 1.5rem;
+    }
+    
+    /* Campos con padding reducido */
+    .login-card input,
+    .login-card select {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+    }
+    
+    /* Botón más compacto */
+    .btn-login {
+        padding: 0.7rem;
+        font-size: 1rem;
+    }
+    
+    /* Enlaces más pequeños */
+    .login-links {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Container con padding mínimo */
+    .login-container {
+        padding: 0.5rem;
+    }
+    
+    /* Card con padding reducido */
+    .login-card {
+        padding: 1.5rem;
+        max-width: 320px;
+    }
+    
+    /* Logo aún más pequeño */
+    .login-logo span {
+        font-size: 2.5rem;
+    }
+    
+    /* Título compacto */
+    .login-logo h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Form groups más compactos */
+    .login-card .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    /* Campos más pequeños */
+    .login-card input,
+    .login-card select {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Botón compacto */
+    .btn-login {
+        padding: 0.6rem;
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Enlaces compactos */
+    .login-links {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Animación de entrada de la card */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Aplicar animación de entrada */
+.login-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Efecto de pulsación en el botón al hacer clic */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.98);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Aplicar pulsación al botón activo */
+.btn-login:active {
+    animation: pulse 0.2s ease-out;
+}
