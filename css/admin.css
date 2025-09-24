@@ -1,0 +1,388 @@
+/* Contenedor de acciones del usuario en el header */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Espacio entre elementos */
+}
+
+/* Texto de identificación del usuario */
+.user-actions span {
+    color: var(--text-light);
+    font-weight: 500;
+    margin-right: 1rem;
+}
+
+/* Grid de estadísticas en la parte superior */
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Columnas responsivas */
+    gap: 1.5rem;
+    margin: 2rem 0;
+    padding: 0 2rem;
+}
+
+/* Card individual de estadística */
+.admin-stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: var(--transition);
+    border-left: 4px solid var(--primary-color); /* Borde de color característico */
+}
+
+/* Efecto hover en cards de estadística */
+.admin-stat-card:hover {
+    transform: translateY(-5px);       /* Efecto de elevación */
+    box-shadow: var(--shadow-hover);
+}
+
+/* Número grande de la estadística */
+.admin-stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    line-height: 1;                   /* Reduce el espaciado de línea */
+}
+
+/* Etiqueta descriptiva de la estadística */
+.admin-stat-label {
+    font-size: 1rem;
+    color: var(--text-color);
+    font-weight: 500;
+    text-transform: uppercase;         /* Texto en mayúsculas */
+    letter-spacing: 0.5px;            /* Espaciado entre letras */
+}
+
+/* Título principal del dashboard */
+main h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 3rem 0 2rem 0;
+    color: var(--primary-color);
+    position: relative;
+}
+
+/* Línea decorativa debajo del título */
+main h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* Grid principal del dashboard administrativo */
+.admin-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Columnas responsivas */
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem 2rem 2rem;
+}
+
+/* Card base para cada funcionalidad administrativa */
+.admin-card {
+    background: white;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow);
+    overflow: hidden;                 /* Evita desbordamiento de contenido */
+    transition: var(--transition);
+    border: 2px solid transparent;    /* Borde transparente por defecto */
+}
+
+/* Efecto hover en cards administrativas */
+.admin-card:hover {
+    transform: translateY(-8px);      /* Mayor elevación que las stats */
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-color); /* Borde visible al hacer hover */
+}
+
+/* Header de la card con icono y título */
+.admin-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, var(--light-color), #ffffff); /* Gradiente sutil */
+    border-bottom: 1px solid #eee;
+}
+
+/* Icono del header de la card */
+.admin-card-icon {
+    font-size: 2.5rem;               /* Icono grande para mejor visibilidad */
+    color: var(--primary-color);
+}
+
+/* Título del header de la card */
+.admin-card-header h3 {
+    color: var(--dark-color);
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Descripción dentro de la card */
+.admin-card p {
+    padding: 1.5rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Footer de la card con botones de acción */
+.card-footer {
+    padding: 1.5rem;
+    background-color: #f8f9fa;       /* Fondo ligeramente diferente */
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+/* Botones dentro del footer de la card */
+.card-footer .btn {
+    width: 100%;                     /* Botón que ocupa todo el ancho */
+    font-size: 1rem;
+    padding: 0.8rem 1.5rem;
+}
+
+/* Card de órdenes con borde azul */
+.admin-card.orders {
+    border-left: 4px solid #3498db;
+}
+
+.admin-card.orders:hover {
+    border-color: #3498db;
+}
+
+.admin-card.orders .admin-card-icon {
+    color: #3498db;
+}Rate limiting temporarily triggered
+.admin-card.clients {
+    border-left: 4px solid #e67e22;
+}
+
+.admin-card.clients:hover {
+    border-color: #e67e22;
+}
+
+.admin-card.clients .admin-card-icon {
+    color: #e67e22;
+}
+
+/* Card de inventario con borde verde */
+.admin-card.inventory {
+    border-left: 4px solid #27ae60;
+}
+
+.admin-card.inventory:hover {
+    border-color: #27ae60;
+}
+
+.admin-card.inventory .admin-card-icon {
+    color: #27ae60;
+}
+
+/* Card de proveedores con borde púrpura */
+.admin-card.suppliers {
+    border-left: 4px solid #8e44ad;
+}
+
+.admin-card.suppliers:hover {
+    border-color: #8e44ad;
+}
+
+.admin-card.suppliers .admin-card-icon {
+    color: #8e44ad;
+}
+
+/* Card de reportes con borde naranja */
+.admin-card.reports {
+    border-left: 4px solid #f39c12;
+}
+
+.admin-card.reports:hover {
+    border-color: #f39c12;
+}
+
+.admin-card.reports .admin-card-icon {
+    color: #f39c12;
+}
+
+/* Card de configuración con borde rojo */
+.admin-card.settings {
+    border-left: 4px solid #e74c3c;
+}
+
+.admin-card.settings:hover {
+    border-color: #e74c3c;
+}
+
+.admin-card.settings .admin-card-icon {
+    color: #e74c3c;
+}
+
+/* Card deshabilitada */
+.admin-card.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Card con notificación */
+.admin-card.has-notification {
+    position: relative;
+}
+
+/* Badge de notificación en la esquina */
+.admin-card.has-notification::before {
+    content: attr(data-notification);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    /* Stats en una sola columna en móviles */
+    .admin-stats {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+        gap: 1rem;
+    }
+    
+    /* Cards de estadística más compactas */
+    .admin-stat-card {
+        padding: 1.5rem;
+    }
+    
+    /* Número de estadística más pequeño */
+    .admin-stat-number {
+        font-size: 2.5rem;
+    }
+    
+    /* Dashboard en una columna */
+    .admin-dashboard {
+        grid-template-columns: 1fr;
+        padding: 0 1rem 2rem 1rem;
+        gap: 1.5rem;
+    }
+    
+    /* Título principal más pequeño */
+    main h2 {
+        font-size: 2rem;
+        margin: 2rem 0 1.5rem 0;
+    }
+    
+    /* Header de card más compacto */
+    .admin-card-header {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    /* Icono más pequeño en móviles */
+    .admin-card-icon {
+        font-size: 2rem;
+    }
+    
+    /* Título de card más pequeño */
+    .admin-card-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    /* Padding reducido en descripción */
+    .admin-card p {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Footer más compacto */
+    .card-footer {
+        padding: 1rem;
+    }
+    
+    /* User actions apiladas */
+    .user-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    /* Span de usuario con margen reducido */
+    .user-actions span {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Responsibidad */
+@media (max-width: 480px) {
+    /* Margen y padding mínimos */
+    .admin-stats {
+        margin: 1rem 0;
+    }
+    
+    /* Cards de estadística aún más compactas */
+    .admin-stat-card {
+        padding: 1rem;
+    }
+    
+    /* Número de estadística más pequeño */
+    .admin-stat-number {
+        font-size: 2rem;
+    }
+    
+    /* Label de estadística más pequeña */
+    .admin-stat-label {
+        font-size: 0.9rem;
+    }
+    
+    /* Título principal reducido */
+    main h2 {
+        font-size: 1.8rem;
+    }
+    
+    /* Dashboard con menos padding */
+    .admin-dashboard {
+        padding: 0 0.5rem 1rem 0.5rem;
+    }
+    
+    /* Header de card simplificado */
+    .admin-card-header {
+        padding: 0.8rem;
+    }
+    
+    /* Icono reducido */
+    .admin-card-icon {
+        font-size: 1.8rem;
+    }
+    
+    /* Descripción con menos padding */
+    .admin-card p {
+        padding: 0.8rem;
+    }
+    
+    /* Footer compacto */
+    .card-footer {
+        padding: 0.8rem;
+    }
+}
