@@ -1,0 +1,474 @@
+/* Contenedor principal del formulario de solicitudes */
+.solicitud-container,
+.form-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    min-height: calc(100vh - 200px);
+}
+
+/* Header del formulario con título centrado */
+.solicitud-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+}
+
+/* Título principal del formulario */
+.solicitud-header h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    position: relative;
+}
+
+/* Línea decorativa debajo del título */
+.solicitud-header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
+/* Descripción del formulario */
+.solicitud-header p {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    opacity: 0.8;
+}
+
+/* Card principal que contiene todo el formulario */
+.solicitud-form,
+.form-container form {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow);
+    border: 1px solid #eee;
+}
+
+/* Sección individual del formulario con estilo diferenciado */
+.form-section {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    background-color: #fafafa;
+    position: relative;
+    transition: var(--transition);
+}
+
+/* Efecto hover en secciones */
+.form-section:hover {
+    background-color: #f5f5f5;
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(142, 140, 83, 0.1);
+}
+
+/* Título de cada sección */
+.form-section h3 {
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+    position: relative;
+}
+
+/* Icono decorativo para títulos de sección */
+.form-section h3::before {
+    content: '📋';                   /* Icono de clipboard */
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+/* Iconos específicos para cada sección */
+.form-section:nth-child(1) h3::before { content: '👤'; } /* Cliente */
+.form-section:nth-child(2) h3::before { content: '💻'; } /* Equipo */
+.form-section:nth-child(3) h3::before { content: '🔧'; } /* Servicio */
+
+/* Input con botón incorporado */
+.input-with-button {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;          /* Alinea el botón con el input */
+}
+
+/* Input dentro del contenedor con botón */
+.input-with-button input {
+    flex-grow: 1;                   /* Ocupa el espacio disponible */
+}
+
+/* Botón pequeño junto al input */
+.input-with-button button {
+    padding: 0.8rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    white-space: nowrap;            /* Evita salto de línea */
+}
+
+/* Efecto hover del botón pequeño */
+.input-with-button button:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+/* Contenedor de la lista de repuestos necesarios */
+#listaRepuestosNecesarios {
+    margin-top: 1rem;
+    min-height: 50px;               /* Altura mínima para visibilidad */
+    padding: 0.5rem;
+    border: 1px dashed #ddd;
+    border-radius: var(--border-radius);
+    background-color: #f9f9f9;
+}
+
+/* Elemento individual de repuesto */
+.repuesto-item {
+    background-color: #e0e0e0;
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+/* Efecto hover en elementos de repuesto */
+.repuesto-item:hover {
+    background-color: #d5d5d5;
+    transform: translateX(2px);
+}
+
+/* Botón de eliminar repuesto */
+.repuesto-item button {
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    transition: var(--transition);
+}
+
+/* Efecto hover del botón eliminar */
+.repuesto-item button:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Modal específico para confirmación de solicitud */
+#modalConfirmacion .modal-content {
+    max-width: 600px;
+    padding: 2.5rem;
+}
+
+/* Título del modal con icono de éxito */
+#modalConfirmacion h3 {
+    color: #27ae60;                 /* Verde para éxito */
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Número de orden destacado */
+.orden-numero,
+#numeroOrdenGenerado {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: var(--light-color);
+    border-radius: var(--border-radius);
+    text-align: center;
+    border: 2px dashed var(--primary-color);
+    font-family: 'Courier New', monospace; /* Fuente monoespaciada para números */
+}
+
+/* Campo con error */
+.form-group.error input,
+.form-group.error textarea,
+.form-group.error select {
+    border-color: var(--accent-color);
+    background-color: #fff5f5;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+/* Campo válido */
+.form-group.success input,
+.form-group.success textarea,
+.form-group.success select {
+    border-color: #27ae60;
+    background-color: #f8fff8;
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+}
+
+/* Mensaje de error en campos */
+.error-message {
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+/* Icono de error */
+.error-message::before {
+    content: '⚠️';
+    font-size: 0.9rem;
+}
+
+/* Mensaje de éxito en campos */
+.success-message {
+    color: #27ae60;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+/* Icono de éxito */
+.success-message::before {
+    content: '✅';
+    font-size: 0.9rem;
+}
+
+/* Barra de progreso del formulario */
+.form-progress {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+/* Lista de pasos del progreso */
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+/* Línea de conexión entre pasos */
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #ddd;
+    z-index: 1;
+}
+
+/* Paso individual */
+.progress-step {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    z-index: 2;
+    position: relative;
+}
+
+/* Paso completado */
+.progress-step.completed {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* Paso actual */
+.progress-step.current {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    /* Container más compacto */
+    .solicitud-container,
+    .form-container {
+        padding: 1rem;
+    }
+    
+    /* Header más compacto */
+    .solicitud-header {
+        margin-bottom: 2rem;
+        padding: 1rem 0;
+    }
+    
+    /* Título más pequeño */
+    .solicitud-header h1 {
+        font-size: 2rem;
+    }
+    
+    /* Formulario con menos padding */
+    .solicitud-form,
+    .form-container form {
+        padding: 1.5rem;
+    }
+    
+    /* Secciones más compactas */
+    .form-section {
+        padding: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* Título de sección más pequeño */
+    .form-section h3 {
+        font-size: 1.2rem;
+    }
+    
+    /* Input con botón apilado */
+    .input-with-button {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    /* Botón de ancho completo */
+    .input-with-button button {
+        width: 100%;
+    }
+    
+    /* Modal más compacto */
+    #modalConfirmacion .modal-content {
+        padding: 2rem 1.5rem;
+    }
+    
+    /* Número de orden más pequeño */
+    .orden-numero,
+    #numeroOrdenGenerado {
+        font-size: 1.5rem;
+        padding: 0.8rem;
+    }
+    
+    /* Progress steps apilados */
+    .progress-steps {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    /* Ocultar línea de progreso en móviles */
+    .progress-steps::before {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Container mínimo */
+    .solicitud-container,
+    .form-container {
+        padding: 0.5rem;
+    }
+    
+    /* Header minimalista */
+    .solicitud-header {
+        padding: 0.5rem 0;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Título compacto */
+    .solicitud-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    /* Formulario muy compacto */
+    .solicitud-form,
+    .form-container form {
+        padding: 1rem;
+    }
+    
+    /* Secciones minimalistas */
+    .form-section {
+        padding: 0.8rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Modal muy compacto */
+    #modalConfirmacion .modal-content {
+        padding: 1.5rem 1rem;
+    }
+    
+    /* Número de orden compacto */
+    .orden-numero,
+    #numeroOrdenGenerado {
+        font-size: 1.3rem;
+        padding: 0.6rem;
+    }
+}
+
+/* Animación de aparición de secciones */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Aplicar animación con delay */
+.form-section:nth-child(1) { animation: slideInLeft 0.6s ease-out 0.1s both; }
+.form-section:nth-child(2) { animation: slideInLeft 0.6s ease-out 0.2s both; }
+.form-section:nth-child(3) { animation: slideInLeft 0.6s ease-out 0.3s both; }
+
+/* Animación de éxito para el modal */
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Aplicar animación al modal de confirmación */
+#modalConfirmacion .modal-content {
+    animation: bounceIn 0.6s ease-out;
+}
