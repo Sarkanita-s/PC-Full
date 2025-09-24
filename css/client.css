@@ -1,0 +1,467 @@
+/* Enlace de administrador inicialmente oculto */
+#adminLoginLink {
+    opacity: 0;                        /* Invisible por defecto */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+    z-index: 1000;                    /* Por encima de otros elementos */
+    pointer-events: none;             /* No clickeable cuando está oculto */
+    transition: opacity 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out, padding 0.3s ease-in-out;
+    color: transparent;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+}
+
+/* Estado visible del enlace de administrador */
+#adminLoginLink.visible {
+    opacity: 1;                       /* Completamente visible */
+    pointer-events: auto;             /* Clickeable cuando es visible */
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: bold;
+    width: auto;
+    height: auto;
+    white-space: nowrap;              /* Evita salto de línea */
+    text-decoration: none;
+}
+
+/* Contenedor de bloques de acción alineados a la derecha */
+.action-blocks {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;        /* Alineación a la derecha */
+    gap: 0.5rem;                     /* Espacio entre botones */
+}
+
+/* Botón de WhatsApp con color característico */
+.action-blocks .blockwsp {
+    background-color: #25D366;        /* Verde oficial de WhatsApp */
+    padding: 0.8rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Efecto hover para botón WhatsApp */
+.action-blocks .blockwsp:hover {
+    background-color: #128C7E;        /* Verde más oscuro al hacer hover */
+    transform: translateY(-2px);      /* Ligero efecto de elevación */
+}
+
+/* Botón de ver estado con color naranja */
+.action-blocks .blockest {
+    background-color: #f39c12;        /* Naranja para identificar estado */
+    padding: 0.8rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: var(--transition);
+}
+
+/* Efecto hover para botón de estado */
+.action-blocks .blockest:hover {
+    background-color: #d68910;        /* Naranja más oscuro */
+    transform: translateY(-2px);
+}
+
+/* Sección principal con imagen de fondo y overlay */
+#Inicio {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://images.unsplash.com/photo-1547082299-de196ea013d6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;           /* Imagen cubre toda la sección */
+    background-position: center;      /* Centrada horizontal y verticalmente */
+    background-attachment: fixed;     /* Efecto parallax al hacer scroll */
+    color: var(--text-light);
+    padding: 6rem 2rem;              /* Espaciado generoso */
+    text-align: center;
+    min-height: 70vh;                /* Al menos 70% de la altura de pantalla */
+}
+
+/* Contenedor del contenido hero con límite de ancho */
+.hero-content {
+    max-width: 1200px;
+    margin: 0 auto;                  /* Centrado horizontal */
+}
+
+/* Título principal del hero */
+.hero-content h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para mejor legibilidad */
+    line-height: 1.2;               /* Altura de línea reducida para títulos */
+}
+
+/* Subtítulo del hero */
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    max-width: 700px;               /* Ancho máximo para mejor legibilidad */
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Contenedor de botones del hero */
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;                /* Permite salto de línea en pantallas pequeñas */
+}
+
+/* Área de imagen placeholder del hero */
+.hero-image {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;                /* Responsivo en móviles */
+}
+
+/* Elementos de imagen placeholder */
+.hero-image span {
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+    padding: 2rem;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);     /* Efecto de difuminado */
+    font-size: 2rem;
+    min-width: 150px;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contenedor principal de la sección servicios */
+#servicios {
+    padding: 5rem 2rem;
+    background-color: white;
+    text-align: center;
+}
+
+/* Título de la sección servicios */
+#servicios h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--dark-color);
+    position: relative;
+}
+
+/* Línea decorativa debajo del título */
+#servicios h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);     /* Centrado perfecto */
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* Grid de servicios con iconos y descripciones */
+.services-grid {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 2;                  /* Mayor espaciado entre líneas */
+}
+
+/* Elementos individuales de servicio */
+.services-grid p {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    transition: var(--transition);
+    border-radius: var(--border-radius);
+}
+
+/* Efecto hover en elementos de servicio */
+.services-grid p:hover {
+    background-color: var(--light-color);
+    transform: translateX(5px);      /* Ligero desplazamiento horizontal */
+}
+
+/* Contenedor principal de la sección contacto */
+#contacto {
+    padding: 5rem 2rem;
+    background-color: var(--light-color);
+}
+
+/* Título de la sección contacto */
+#contacto h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--dark-color);
+    position: relative;
+}
+
+/* Línea decorativa debajo del título */
+#contacto h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* Contenedor de mapa e imagen */
+.contacto-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;                      /* Espacio entre mapa e imagen */
+    margin-bottom: 2rem;
+    flex-wrap: wrap;                /* Permite apilamiento en móviles */
+}
+
+/* Estilo de la imagen del local */
+.contacto-container img {
+    width: 350px;
+    height: 295px;
+    object-fit: cover;              /* Mantiene proporciones sin deformar */
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+/* Efecto hover en imagen */
+.contacto-container img:hover {
+    transform: scale(1.05);         /* Ligero zoom al hacer hover */
+    box-shadow: var(--shadow-hover);
+}
+
+/* Iframe del mapa con estilos */
+.contacto-container iframe {
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+/* Información de contacto centrada */
+.contacto-info {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;               /* Mayor espaciado para mejor legibilidad */
+}
+
+/* Elementos individuales de información */
+.contacto-info p {
+    margin-bottom: 0.8rem;
+    padding: 0.5rem;
+    transition: var(--transition);
+}
+
+/* Efecto hover en información de contacto */
+.contacto-info p:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: var(--border-radius);
+}
+
+/* Contenedor de la sección área clientes */
+#clientes {
+    padding: 5rem 2rem;
+    background-color: white;
+    min-height: 40vh;               /* Altura mínima */
+}
+
+/* Título de la sección clientes */
+#clientes h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--dark-color);
+    position: relative;
+}
+
+/* Línea decorativa debajo del título */
+#clientes h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* Área de cliente con diseño centrado */
+.client-area {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--light-color);
+    padding: 3rem;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+/* Contenedor de login de cliente */
+.client-login {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Párrafos del área de cliente */
+.client-login p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+/* Responsividad */
+@media (max-width: 768px) {
+    /* Hero responsivo */
+    #Inicio {
+        padding: 4rem 1rem;
+        min-height: 60vh;           /* Menos altura en móviles */
+    }
+    
+    /* Título hero más pequeño en móviles */
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    /* Subtítulo hero más pequeño */
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+    
+    /* Botones hero en columna */
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    /* Imagen hero en columna */
+    .hero-image {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    /* Elementos de imagen más pequeños */
+    .hero-image span {
+        font-size: 1.5rem;
+        min-width: 120px;
+        min-height: 120px;
+        padding: 1.5rem;
+    }
+    
+    /* Secciones con menos padding */
+    #servicios,
+    #contacto,
+    #clientes {
+        padding: 3rem 1rem;
+    }
+    
+    /* Títulos más pequeños en móviles */
+    #servicios h2,
+    #contacto h2,
+    #clientes h2 {
+        font-size: 2rem;
+    }
+    
+    /* Contacto container apilado */
+    .contacto-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    /* Imagen más pequeña en móviles */
+    .contacto-container img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+    
+    /* Iframe responsivo */
+    .contacto-container iframe {
+        width: 100%;
+        max-width: 400px;
+        height: 250px;
+    }
+    
+    /* Bloques de acción responsivos */
+    .action-blocks {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    /* Botones de acción más pequeños */
+    .action-blocks .blockwsp,
+    .action-blocks .blockest {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        margin: 0.25rem;
+    }
+    
+    /* Client area con menos padding */
+    .client-area {
+        padding: 2rem 1.5rem;
+        margin: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Hero con padding mínimo */
+    #Inicio {
+        padding: 3rem 0.5rem;
+    }
+    
+    /* Título aún más pequeño */
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    /* Services grid más compacto */
+    .services-grid {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+    
+    /* Contacto info más pequeña */
+    .contacto-info {
+        font-size: 1rem;
+    }
+    
+    /* Admin login link ajustado */
+    #adminLoginLink.visible {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin: 0.5rem auto;
+        display: block;
+    }
+}
