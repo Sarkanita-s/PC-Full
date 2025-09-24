@@ -1,0 +1,470 @@
+:root {
+    /* Colores principales del sistema */
+    --primary-color: #8e8c53;        /* Verde oliva principal */
+    --secondary-color: #6b6940;      /* Verde oliva oscuro */
+    --accent-color: #e74c3c;         /* Rojo para alertas y acciones importantes */
+    --light-color: #f5f4e9;          /* Fondo claro beige */
+    --dark-color: #333;              /* Texto oscuro principal */
+    --text-color: #333;              /* Color de texto por defecto */
+    --text-light: #fff;              /* Texto blanco para fondos oscuros */
+    
+    /* Efectos y transiciones */
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);           /* Sombra estándar para cards */
+    --shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.15);  /* Sombra para hover */
+    --transition: all 0.3s ease;                       /* Transición estándar */
+    
+    /* Bordes y espaciados */
+    --border-radius: 8px;             /* Radio de borde estándar */
+    --border-radius-large: 15px;      /* Radio de borde para elementos grandes */
+    --padding-standard: 1rem;         /* Padding estándar */
+    --padding-large: 2rem;            /* Padding grande */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho */
+}
+
+/* Configuración de scroll suave para navegación interna */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Configuración base del cuerpo */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente moderna y legible */
+    line-height: 1.6;                    /* Espaciado de línea para mejor legibilidad */
+    color: var(--text-color);            /* Color de texto por defecto */
+    background-color: #f9f9f9;           /* Fondo gris claro */
+    min-height: 100vh;                   /* Altura mínima de pantalla completa */
+    display: flex;                       /* Layout flex para header/main/footer */
+    flex-direction: column;              /* Distribución vertical */
+}
+
+header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-light);
+    padding: 0;
+    position: sticky;                    /* Se mantiene fijo al hacer scroll */
+    top: 0;
+    z-index: 100;                       /* Por encima de otros elementos */
+    box-shadow: var(--shadow);
+}
+
+/* Contenido interno del header con límite de ancho */
+.header-content {
+    max-width: 1200px;                  /* Ancho máximo para escritorios grandes */
+    display: flex;
+    justify-content: space-between;      /* Distribuye logo, nav y acciones */
+    align-items: center;
+    margin: 0 auto;                     /* Centrado horizontal */
+    padding: 15px 20px;
+}
+
+/* Estilo del logo en el header */
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Lista de navegación horizontal */
+nav ul {
+    display: flex;
+    list-style: none;                   /* Quita los puntos de la lista */
+    gap: 1.5rem;                       /* Espacio entre elementos del menú */
+}
+
+/* Enlaces de navegación con efectos */
+nav a {
+    color: var(--text-light);
+    text-decoration: none;              /* Sin subrayado por defecto */
+    font-weight: 500;
+    transition: var(--transition);
+    padding: 0.5rem 0;
+    position: relative;                 /* Para el efecto de subrayado animado */
+}
+
+/* Efecto hover en enlaces de navegación */
+nav a:hover {
+    color: #fff9c5;                    /* Color más claro al pasar el mouse */
+}
+
+/* Línea animada debajo de los enlaces */
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;                          /* Empieza sin ancho */
+    height: 2px;
+    background-color: #fff9c5;
+    transition: var(--transition);
+}
+
+/* Animación de la línea al hacer hover */
+nav a:hover::after {
+    width: 100%;                       /* Se expande al 100% */
+}
+
+/* El contenido principal ocupa el espacio restante */
+main {
+    flex: 1;                           /* Crece para ocupar espacio disponible */
+}
+
+/* Botón base con estilos comunes */
+.btn {
+    padding: 0.8rem 1.8rem;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: bold;
+    transition: var(--transition);
+    display: inline-block;
+    cursor: pointer;
+    border: none;                      /* Sin borde por defecto */
+    font-family: inherit;              /* Hereda la fuente del padre */
+    text-align: center;
+}
+
+/* Botón primario con color de marca */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: 2px solid var(--primary-color);
+}
+
+/* Efecto hover para botón primario */
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transform: translateY(-3px);       /* Efecto de elevación */
+    box-shadow: var(--shadow-hover);
+}
+
+/* Botón secundario con color neutro */
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: 2px solid #6c757d;
+}
+
+/* Efecto hover para botón secundario */
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+/* Botón outline con fondo transparente */
+.btn-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+/* Efecto hover para botón outline */
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Grupo de formulario con espaciado */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Etiquetas de formulario */
+.form-group label {
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Campos de entrada estándar */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: var(--transition);
+    width: 100%;
+}
+
+/* Efecto focus en campos de formulario */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(142, 140, 83, 0.1); /* Sombra sutil del color primario */
+}
+
+/* Área de texto con altura mínima */
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;                  /* Solo redimensionable verticalmente */
+}
+
+/* Disposición de formulario en filas */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas */
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Contenedor de acciones de formulario */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;                   /* Permite salto de línea en pantallas pequeñas */
+}
+
+/* Overlay de fondo para modales */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);    /* Fondo semi-transparente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;                     /* Por encima de todo el contenido */
+}
+
+/* Contenido del modal */
+.modal-content {
+    background: white;
+    padding: var(--padding-large);
+    border-radius: var(--border-radius-large);
+    max-width: 500px;
+    width: 90%;                        /* Responsivo en móviles */
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Sombra pronunciada */
+}
+
+/* Título del modal */
+.modal-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+/* Contenedor de acciones del modal */
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Alerta base */
+.alert {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+
+/* Alerta de error */
+.alert-error {
+    background-color: #ffe6e6;
+    color: #d32f2f;
+    border-color: #ffcdd2;
+}
+
+/* Alerta de éxito */
+.alert-success {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+    border-color: #c8e6c9;
+}
+
+/* Alerta de información */
+.alert-info {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    border-color: #bbdefb;
+}
+
+/* Card base con sombra */
+.card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;                  /* Evita que el contenido se salga */
+    transition: var(--transition);
+}
+
+/* Efecto hover en cards */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Header de card */
+.card-header {
+    padding: var(--padding-standard);
+    background-color: var(--light-color);
+    border-bottom: 1px solid #eee;
+}
+
+/* Cuerpo de card */
+.card-body {
+    padding: var(--padding-standard);
+}
+
+/* Footer de card */
+.card-footer {
+    padding: var(--padding-standard);
+    background-color: #f8f9fa;
+    border-top: 1px solid #eee;
+}
+
+/* Footer con gradiente similar al header */
+footer, .footer {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-light);
+    padding: var(--padding-large);
+    text-align: center;
+}
+
+/* Párrafos del footer */
+footer p, .footer p {
+    margin-bottom: 0.5rem;
+}
+
+/* Enlaces del footer */
+footer a, .footer a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+/* Efecto hover en enlaces del footer */
+footer a:hover, .footer a:hover {
+    color: #fff9c5;
+    text-decoration: underline;
+}
+
+/* Texto alineado al centro */
+.text-center {
+    text-align: center;
+}
+
+/* Texto en negrita */
+.text-bold {
+    font-weight: bold;
+}
+
+/* Márgenes utilitarios */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 2rem; }
+
+/* Padding utilitarios */
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 2rem; }
+
+
+
+ /* Responsividad */
+@media (max-width: 768px) {
+    /* Header responsivo */
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    /* Navegación vertical en móviles */
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    
+    /* Botones responsivos */
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Form row en una columna en móviles */
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Modal responsivo */
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+    
+    /* Acciones de modal en columna */
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    /* Footer con padding reducido */
+    footer, .footer {
+        padding: 1.5rem 1rem;
+    }
+}
+
+/* Elementos deshabilitados */
+.disabled, :disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Estado de carga */
+.loading {
+    position: relative;
+    color: transparent;
+}
+
+/* Spinner de carga */
+.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Animación del spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
