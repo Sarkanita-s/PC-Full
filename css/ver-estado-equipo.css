@@ -1,0 +1,513 @@
+/* Sección principal de estado del equipo */
+.estado-equipo-section {
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+    min-height: calc(100vh - 200px);
+}
+
+/* Contenedor con ancho máximo */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Título principal centrado */
+.estado-equipo-section h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    position: relative;
+}
+
+/* Línea decorativa debajo del título */
+.estado-equipo-section h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
+/* Párrafo descriptivo */
+.estado-equipo-section > .container > p {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* Contenedor del formulario de consulta */
+.consulta-form {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+/* Grupos de formulario específicos */
+.consulta-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Etiquetas del formulario de consulta */
+.consulta-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+/* Campos de entrada del formulario */
+.consulta-form select,
+.consulta-form input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: #fafafa;
+}
+
+/* Estados focus de los campos */
+.consulta-form select:focus,
+.consulta-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(142, 140, 83, 0.1);
+    background-color: white;
+    transform: translateY(-1px);
+}
+
+/* Contenedor principal del resultado */
+.resultado-estado {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border: 1px solid #eee;
+}
+
+/* Card del estado del equipo */
+.estado-card {
+    padding: 2rem;
+}
+
+/* Título del card de estado */
+.estado-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: 600;
+    position: relative;
+}
+
+/* Línea decorativa debajo del título del card */
+.estado-card h3::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* Grid de información del equipo */
+.info-equipo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: var(--light-color);
+    border-radius: var(--border-radius);
+    border: 1px solid #eee;
+}
+
+/* Párrafos de información */
+.info-equipo p {
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px dotted #ddd;
+}
+
+/* Última información sin borde */
+.info-equipo p:last-child {
+    border-bottom: none;
+}
+
+/* Etiquetas en negrita */
+.info-equipo strong {
+    color: var(--dark-color);
+    font-weight: 600;
+    min-width: 140px;
+}
+
+/* Badge del estado actual */
+.estado-badge {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+
+/* Variaciones de color del badge según estado */
+.estado-badge.recibido { background-color: #3498db; }      /* Azul */
+.estado-badge.diagnostico { background-color: #f39c12; }   /* Naranja */
+.estado-badge.reparacion { background-color: #e74c3c; }    /* Rojo */
+.estado-badge.esperando { background-color: #9b59b6; }     /* Púrpura */
+.estado-badge.terminado { background-color: #27ae60; }     /* Verde */
+.estado-badge.entregado { background-color: #2c3e50; }     /* Gris oscuro */
+
+/* Título del progreso */
+.progreso-reparacion h4 {
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Icono del título de progreso */
+.progreso-reparacion h4::before {
+    content: '⚙️';
+    font-size: 1.2rem;
+}
+
+/* Contenedor principal del timeline */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin: 2rem 0;
+}
+
+/* Línea vertical del timeline */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #ddd;
+}
+
+/* Item individual del timeline */
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+    padding-bottom: 1rem;
+}
+
+/* Marcador circular del timeline */
+.timeline-marker {
+    position: absolute;
+    left: -2rem;
+    top: 0.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #ddd;
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+/* Marcador completado */
+.timeline-item.completed .timeline-marker {
+    background-color: var(--primary-color);
+}
+
+/* Marcador actual con animación */
+.timeline-item.current .timeline-marker {
+    background-color: var(--accent-color);
+    animation: pulse 2s infinite;
+}
+
+/* Animación de pulsación para el marcador actual */
+@keyframes pulse {
+    0% { 
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); 
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    70% { 
+        box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); 
+    }
+    100% { 
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+        transform: scale(1);
+    }
+}
+
+/* Contenedor del contenido del timeline */
+.timeline-content {
+    background: white;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-left: 3px solid var(--primary-color);
+}
+
+/* Título del contenido */
+.timeline-content h5 {
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Descripción del contenido */
+.timeline-content p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Sección de notas del técnico */
+.notas-tecnico {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: var(--light-color);
+    border-radius: var(--border-radius);
+    border: 1px solid #eee;
+}
+
+/* Título de las notas */
+.notas-tecnico h4 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Icono del título de notas */
+.notas-tecnico h4::before {
+    content: '📝';
+    font-size: 1.1rem;
+}
+
+/* Contenido de las notas */
+.notas-tecnico div {
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Sección de información de contacto */
+.contacto-info {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+    border-left: 4px solid var(--primary-color);
+    border-radius: var(--border-radius);
+}
+
+/* Párrafo de contacto */
+.contacto-info p {
+    margin: 0;
+    color: var(--text-color);
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* Contenedor de mensaje de error */
+.mensaje-error {
+    background: linear-gradient(135deg, #ffe6e6 0%, #fff0f0 100%);
+    color: #d32f2f;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    border: 1px solid #ffcdd2;
+    border-left: 4px solid #f44336;
+}
+
+/* Párrafos del mensaje de error */
+.mensaje-error p {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* Último párrafo sin margen inferior */
+.mensaje-error p:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    /* Sección con menos padding */
+    .estado-equipo-section {
+        padding: 3rem 1rem;
+    }
+    
+    /* Título más pequeño */
+    .estado-equipo-section h1 {
+        font-size: 2rem;
+    }
+    
+    /* Formulario más compacto */
+    .consulta-form {
+        padding: 1.5rem;
+    }
+    
+    /* Estado card más compacto */
+    .estado-card {
+        padding: 1.5rem;
+    }
+    
+    /* Info equipo en una columna */
+    .info-equipo {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    
+    /* Timeline con menos padding */
+    .timeline {
+        padding-left: 1.5rem;
+    }
+    
+    /* Marcador más pequeño */
+    .timeline-marker {
+        left: -1.75rem;
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+    
+    /* Timeline item más compacto */
+    .timeline-item {
+        padding-left: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Contenido timeline más compacto */
+    .timeline-content {
+        padding: 0.8rem;
+    }
+    
+    /* Secciones con menos padding */
+    .notas-tecnico,
+    .contacto-info {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Sección muy compacta */
+    .estado-equipo-section {
+        padding: 2rem 0.5rem;
+    }
+    
+    /* Título compacto */
+    .estado-equipo-section h1 {
+        font-size: 1.8rem;
+    }
+    
+    /* Formulario minimalista */
+    .consulta-form {
+        padding: 1rem;
+    }
+    
+    /* Card muy compacto */
+    .estado-card {
+        padding: 1rem;
+    }
+    
+    /* Título del card más pequeño */
+    .estado-card h3 {
+        font-size: 1.5rem;
+    }
+    
+    /* Info equipo apilada */
+    .info-equipo p {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    
+    /* Strong sin ancho mínimo */
+    .info-equipo strong {
+        min-width: unset;
+        margin-bottom: 0.3rem;
+    }
+    
+    /* Timeline muy compacto */
+    .timeline {
+        padding-left: 1rem;
+    }
+    
+    /* Timeline item minimalista */
+    .timeline-item {
+        padding-left: 1rem;
+    }
+    
+    /* Marcador pequeño */
+    .timeline-marker {
+        left: -1.3rem;
+        width: 1rem;
+        height: 1rem;
+    }
+}
+
+/* Animación de aparición del resultado */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Aplicar animación al resultado */
+.resultado-estado {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Animación de carga para badge */
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Aplicar pulsación al badge */
+.estado-badge {
+    animation: badgePulse 2s infinite;
+}
