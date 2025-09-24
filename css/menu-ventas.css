@@ -1,0 +1,478 @@
+/* Contenedor principal del menú de ventas */
+.menu-ventas-container {
+    padding: 2rem;
+    min-height: calc(100vh - 200px);  /* Altura mínima menos header y footer */
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); /* Gradiente sutil */
+}
+
+/* Header centrado con información principal */
+.menu-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+}
+
+/* Título principal del sistema */
+.menu-header h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Línea decorativa debajo del título */
+.menu-header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
+/* Descripción debajo del título */
+.menu-header p {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    opacity: 0.8;
+}
+
+/* Barra de información del usuario y fecha */
+.user-info {
+    background-color: var(--light-color);
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--primary-color); /* Borde de color */
+}
+
+/* Texto de información del usuario */
+.user-info div {
+    font-size: 1rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Nombres destacados en negrita */
+.user-info strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Span de usuario actual */
+#usuarioActual {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+/* Span de fecha actual */
+#fechaActual {
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+/* Botón de logout con color de alerta */
+.logout-btn {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Efecto hover del botón de logout */
+.logout-btn:hover {
+    background-color: #c0392b;       /* Rojo más oscuro */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(192, 57, 43, 0.3);
+}
+
+/* Grid responsivo para las opciones del menú */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Columnas responsivas */
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto 3rem auto;        /* Centrado con margen inferior */
+}
+
+/* Tarjeta base para cada opción del menú */
+.menu-item {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: var(--transition);
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;                /* Para efectos adicionales */
+}
+
+/* Efecto hover para items del menú */
+.menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-color);
+}
+
+/* Icono prominente de cada item */
+.menu-item .icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+/* Animación del icono al hacer hover */
+.menu-item:hover .icon {
+    transform: scale(1.1);           /* Ligero zoom del icono */
+    color: var(--secondary-color);
+}
+
+/* Título de cada item del menú */
+.menu-item h3 {
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+/* Descripción de cada item del menú */
+.menu-item p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+    transition: var(--transition);
+}
+
+/* Item disponible con borde de color */
+.menu-item.disponible {
+    border-left: 4px solid var(--primary-color);
+}
+
+/* Efecto hover específico para items disponibles */
+.menu-item.disponible:hover {
+    background: linear-gradient(135deg, #ffffff 0%, var(--light-color) 100%);
+}
+
+/* Item próximamente con opacidad reducida */
+.menu-item.proximamente {
+    opacity: 0.6;
+    cursor: not-allowed;
+    border-left: 4px solid #ccc;    /* Borde gris */
+}
+
+/* No hover para items próximamente */
+.menu-item.proximamente:hover {
+    transform: none;
+    border-color: #ccc;
+    box-shadow: var(--shadow);       /* Mantiene sombra original */
+}
+
+/* Icono gris para items próximamente */
+.menu-item.proximamente .icon {
+    color: #999;
+}
+
+/* Badge "Próximamente" */
+.menu-item.proximamente::before {
+    content: 'PRÓXIMAMENTE';
+    position: absolute;
+    top: 15px;
+    right: -30px;
+    background: #f39c12;
+    color: white;
+    padding: 0.3rem 2.5rem;
+    font-size: 0.7rem;
+    font-weight: bold;
+    transform: rotate(45deg);
+    letter-spacing: 1px;
+}
+
+/* Contenedor de paneles informativos */
+.info-panels {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #eee;      /* Separador visual */
+}
+
+/* Grid de tarjetas informativas */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Tarjetas de información estadística */
+.info-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+    border-left: 4px solid var(--primary-color);
+    transition: var(--transition);
+}
+
+/* Efecto hover en tarjetas informativas */
+.info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* Título de las tarjetas informativas */
+.info-card h4 {
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Número estadístico grande */
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    transition: var(--transition);
+}
+
+/* Animación del número al hacer hover */
+.info-card:hover .stat-number {
+    transform: scale(1.1);
+    color: var(--secondary-color);
+}
+
+/* Descripción de la estadística */
+.info-card p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Card de solicitudes pendientes */
+.info-card.pendientes {
+    border-left-color: #3498db;     /* Azul */
+}
+
+.info-card.pendientes .stat-number {
+    color: #3498db;
+}
+
+/* Card de repuestos críticos */
+.info-card.criticos {
+    border-left-color: #e74c3c;     /* Rojo */
+}
+
+.info-card.criticos .stat-number {
+    color: #e74c3c;
+}
+
+/* Card de órdenes del día */
+.info-card.hoy {
+    border-left-color: #27ae60;     /* Verde */
+}
+
+.info-card.hoy .stat-number {
+    color: #27ae60;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    /* Container con padding reducido */
+    .menu-ventas-container {
+        padding: 1rem;
+    }
+    
+    /* Header más compacto */
+    .menu-header {
+        margin-bottom: 2rem;
+        padding: 1rem 0;
+    }
+    
+    /* Título más pequeño */
+    .menu-header h1 {
+        font-size: 2.2rem;
+    }
+    
+    /* Descripción más pequeña */
+    .menu-header p {
+        font-size: 1.1rem;
+    }
+    
+    /* User info apilado */
+    .user-info {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    /* Grid de menú en una columna */
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* Items de menú más compactos */
+    .menu-item {
+        padding: 1.5rem;
+    }
+    
+    /* Icono más pequeño */
+    .menu-item .icon {
+        font-size: 2.5rem;
+    }
+    
+    /* Título más pequeño */
+    .menu-item h3 {
+        font-size: 1.2rem;
+    }
+    
+    /* Info grid en menos columnas */
+    .info-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    /* Tarjetas info más compactas */
+    .info-card {
+        padding: 1rem;
+    }
+    
+    /* Número estadístico más pequeño */
+    .stat-number {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Container con padding mínimo */
+    .menu-ventas-container {
+        padding: 0.5rem;
+    }
+    
+    /* Header minimalista */
+    .menu-header {
+        padding: 0.5rem 0;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Título compacto */
+    .menu-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    /* User info simplificado */
+    .user-info {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Items de menú muy compactos */
+    .menu-item {
+        padding: 1rem;
+    }
+    
+    /* Icono reducido */
+    .menu-item .icon {
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    /* Título compacto */
+    .menu-item h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    /* Descripción más pequeña */
+    .menu-item p {
+        font-size: 0.85rem;
+    }
+    
+    /* Badge próximamente ajustado */
+    .menu-item.proximamente::before {
+        font-size: 0.6rem;
+        padding: 0.2rem 2rem;
+        right: -25px;
+    }
+    
+    /* Info grid en una columna */
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Info cards muy compactas */
+    .info-card {
+        padding: 0.8rem;
+    }
+    
+    /* Número estadístico compacto */
+    .stat-number {
+        font-size: 1.8rem;
+    }
+    
+    /* Título de info card más pequeño */
+    .info-card h4 {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animación de entrada para los items del menú */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Aplicar animación con delay escalonado */
+.menu-item:nth-child(1) { animation: slideInUp 0.6s ease-out 0.1s both; }
+.menu-item:nth-child(2) { animation: slideInUp 0.6s ease-out 0.2s both; }
+.menu-item:nth-child(3) { animation: slideInUp 0.6s ease-out 0.3s both; }
+.menu-item:nth-child(4) { animation: slideInUp 0.6s ease-out 0.4s both; }
+
+/* Animación de pulso para números estadísticos */
+@keyframes pulse-number {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Aplicar pulso al cargar números */
+.stat-number.loading {
+    animation: pulse-number 1s infinite;
+}
