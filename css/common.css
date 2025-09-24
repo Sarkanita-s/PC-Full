@@ -34,7 +34,7 @@ html {
 /* Configuración base del cuerpo */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente moderna y legible */
-    line-height: 1.6;                    /* Espaciado de línea para mejor legibilidad */
+    line-height: 1;                    /* Espaciado de línea para mejor legibilidad */
     color: var(--text-color);            /* Color de texto por defecto */
     background-color: #f9f9f9;           /* Fondo gris claro */
     min-height: 100vh;                   /* Altura mínima de pantalla completa */
@@ -64,7 +64,7 @@ header {
 
 /* Estilo del logo en el header */
 .logo {
-    font-size: 1.8rem;
+    font-size: 1rem;
     font-weight: bold;
     color: var(--text-light);
     display: flex;
