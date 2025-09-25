@@ -1,328 +1,305 @@
+// Almacenamiento de órdenes filtradas
+let ordenesData = [];
+let ordenesFiltradas = [];
+const PRECIO_SERVICIO = 5000; // Mismo precio que en ingresar-solicitud.js
+
+// Orden actualmente seleccionada
+let ordenSeleccionada = null;
+
 document.addEventListener('DOMContentLoaded', function() {
-    
-    initializeHardwareModule();
-    cargarTablaRepuestos();
+    // Inicializar el módulo
+    cargarOrdenes();
+    configurarEventos();
     actualizarEstadisticas();
-    cargarListaComprasSolicitadas(); 
+    
+    // Mostrar mensaje inicial en la sección de detalles
+    mostrarMensajeSeleccionOrden();
 });
 
 function verificarAutenticacion() {
-    
+    // Por implementar si se necesita
 }
 
-function initializeHardwareModule() {
-    const datosGuardados = localStorage.getItem('repuestos_data');
-    if (datosGuardados) {
-        repuestosData = JSON.parse(datosGuardados);
-        repuestosFiltrados = [...repuestosData];
-    }
+// Función para cargar todas las órdenes desde localStorage
+function cargarOrdenes() {
+    // Cargamos todas las órdenes (hardware y software)
+    const ordenesHardware = JSON.parse(localStorage.getItem('tecnico_hardware')) || [];
     
-    document.getElementById('formRepuesto').addEventListener('submit', function(e) {
-        e.preventDefault();
-        guardarRepuesto();
+    // Ordenamos por fecha (más antiguas primero)
+    ordenesData = ordenesHardware.sort((a, b) => {
+        return new Date(a.fecha) - new Date(b.fecha);
+    });
+    
+    // Tomamos sólo las primeras 10 órdenes
+    ordenesFiltradas = ordenesData.slice(0, 10);
+    
+    // Cargamos la tabla
+    cargarTablaOrdenes();
+}
+
+// Función para configurar eventos de los elementos
+function configurarEventos() {
+    // Configurar eventos para filtros
+    document.getElementById('filtroFecha').addEventListener('change', filtrarOrdenes);
+    document.getElementById('filtroEquipo').addEventListener('change', filtrarOrdenes);
+    document.getElementById('busqueda').addEventListener('keyup', filtrarOrdenes);
+    
+    // Otros eventos
+    document.getElementById('marcarListo').addEventListener('change', function() {
+        const checkbox = document.getElementById('marcarListo');
+        // Habilitamos el botón de guardar cuando se marca el checkbox
+        document.querySelector('.orden-acciones .btn-primary').disabled = !checkbox.checked;
     });
 }
 
-function cargarTablaRepuestos() {
-    const tbody = document.getElementById('tablaRepuestosBody');
+// Función para cargar la tabla de órdenes
+function cargarTablaOrdenes() {
+    const tbody = document.getElementById('tablaOrdenesBody');
     tbody.innerHTML = '';
     
-    repuestosFiltrados.forEach(repuesto => {
-        const fila = crearFilaRepuesto(repuesto);
-        tbody.appendChild(fila);
-    });
-}
-
-function crearFilaRepuesto(repuesto) {
-    const tr = document.createElement('tr');
-    tr.className = `estado-${repuesto.estado}`;
+    // Limitamos a 10 órdenes como máximo
+    const ordenesAMostrar = ordenesFiltradas.slice(0, 10);
     
-    tr.innerHTML = `
-        <td class="codigo">${repuesto.codigo}</td>
-        <td class="nombre">${repuesto.nombre}</td>
-        <td class="categoria">${obtenerNombreCategoria(repuesto.categoria)}</td>
-        <td class="stock ${repuesto.stock <= repuesto.minimo ? 'stock-bajo' : ''}">${repuesto.stock}</td>
-        <td class="minimo">${repuesto.minimo}</td>
-        <td class="precio">$${repuesto.precio.toLocaleString('es-CL')}</td>
-        <td class="estado">
-            <span class="badge badge-${repuesto.estado}">${obtenerNombreEstado(repuesto.estado)}</span>
-        </td>
-        <td class="proveedor">${repuesto.proveedor}</td>
-        <td class="acciones">
-            <button onclick="editarRepuesto('${repuesto.codigo}')" class="btn-icon" title="Editar">✏️</button>
-            <button onclick="marcarCritico('${repuesto.codigo}')" class="btn-icon" title="Marcar como crítico">⚠️</button>
-            <button onclick="solicitarCompra('${repuesto.codigo}')" class="btn-icon" title="Solicitar compra">🛒</button>
-        </td>
-    `;
-    
-    return tr;
-}
-
-function obtenerNombreCategoria(categoria) {
-    const nombres = {
-        'procesador': 'Procesadores',
-        'memoria': 'Memoria RAM',
-        'almacenamiento': 'Almacenamiento',
-        'tarjeta-video': 'Tarjetas de Video',
-        'fuente': 'Fuentes de Poder',
-        'placa-madre': 'Placas Madre',
-        'refrigeracion': 'Refrigeración',
-        'cables': 'Cables y Conectores',
-        'otros': 'Otros'
-    };
-    return nombres[categoria] || categoria;
-}
-
-function obtenerNombreEstado(estado) {
-    const nombres = {
-        'disponible': 'Disponible',
-        'critico': 'Crítico',
-        'agotado': 'Agotado',
-        'pedido': 'En Pedido'
-    };
-    return nombres[estado] || estado;
-}
-
-function actualizarEstadisticas() {
-    const criticos = repuestosData.filter(r => r.estado === 'critico').length;
-    const agotados = repuestosData.filter(r => r.estado === 'agotado').length;
-    const pedidos = repuestosData.filter(r => r.estado === 'pedido').length;
-    const total = repuestosData.length;
-    
-    document.getElementById('statCriticos').textContent = criticos;
-    document.getElementById('statAgotados').textContent = agotados;
-    document.getElementById('statPedidos').textContent = pedidos;
-    document.getElementById('statTotal').textContent = total;
-}
-
-function filtrarRepuestos() {
-    const categoria = document.getElementById('filtroCategoria').value;
-    const estado = document.getElementById('filtroEstado').value;
-    const busqueda = document.getElementById('busqueda').value.toLowerCase();
-    
-    repuestosFiltrados = repuestosData.filter(repuesto => {
-        const matchCategoria = !categoria || repuesto.categoria === categoria;
-        const matchEstado = !estado || repuesto.estado === estado;
-        const matchBusqueda = !busqueda || 
-            repuesto.nombre.toLowerCase().includes(busqueda) ||
-            repuesto.codigo.toLowerCase().includes(busqueda);
-        
-        return matchCategoria && matchEstado && matchBusqueda;
-    });
-    
-    cargarTablaRepuestos();
-}
-
-function limpiarFiltros() {
-    document.getElementById('filtroCategoria').value = '';
-    document.getElementById('filtroEstado').value = '';
-    document.getElementById('busqueda').value = '';
-    repuestosFiltrados = [...repuestosData];
-    cargarTablaRepuestos();
-}
-
-function agregarRepuesto() {
-    document.getElementById('modalTitulo').textContent = 'Agregar Nuevo Repuesto';
-    limpiarFormularioModal();
-    document.getElementById('modalRepuesto').style.display = 'flex';
-}
-
-function editarRepuesto(codigo) {
-    const repuesto = repuestosData.find(r => r.codigo === codigo);
-    if (!repuesto) return;
-    
-    document.getElementById('modalTitulo').textContent = 'Editar Repuesto';
-    cargarDatosEnModal(repuesto);
-    document.getElementById('modalRepuesto').style.display = 'flex';
-}
-
-function cargarDatosEnModal(repuesto) {
-    document.getElementById('modalCodigo').value = repuesto.codigo;
-    document.getElementById('modalNombre').value = repuesto.nombre;
-    document.getElementById('modalCategoria').value = repuesto.categoria;
-    document.getElementById('modalProveedor').value = repuesto.proveedor;
-    document.getElementById('modalStock').value = repuesto.stock;
-    document.getElementById('modalMinimo').value = repuesto.minimo;
-    document.getElementById('modalPrecio').value = repuesto.precio;
-    
-    document.getElementById('modalCodigo').readOnly = true;
-}
-
-function limpiarFormularioModal() {
-    document.getElementById('formRepuesto').reset();
-    document.getElementById('modalCodigo').readOnly = false;
-}
-
-function guardarRepuesto() {
-    const datos = {
-        codigo: document.getElementById('modalCodigo').value.trim(),
-        nombre: document.getElementById('modalNombre').value.trim(),
-        categoria: document.getElementById('modalCategoria').value,
-        proveedor: document.getElementById('modalProveedor').value.trim(),
-        stock: parseInt(document.getElementById('modalStock').value),
-        minimo: parseInt(document.getElementById('modalMinimo').value),
-        precio: parseFloat(document.getElementById('modalPrecio').value) || 0
-    };
-    
-    if (datos.stock === 0) {
-        datos.estado = 'agotado';
-    } else if (datos.stock <= datos.minimo) {
-        datos.estado = 'critico';
-    } else {
-        datos.estado = 'disponible';
-    }
-    
-    const indice = repuestosData.findIndex(r => r.codigo === datos.codigo);
-    
-    if (indice >= 0) {
-        repuestosData[indice] = datos;
-    } else {
-        repuestosData.push(datos);
-    }
-    
-    localStorage.setItem('repuestos_data', JSON.stringify(repuestosData));
-    
-    cerrarModal();
-    filtrarRepuestos();
-    actualizarEstadisticas();
-    cargarListaComprasSolicitadas(); 
-    
-    alert('Repuesto guardado exitosamente.');
-}
-
-function cerrarModal() {
-    document.getElementById('modalRepuesto').style.display = 'none';
-}
-
-function marcarCritico(codigo) {
-    const repuesto = repuestosData.find(r => r.codigo === codigo);
-    if (!repuesto) return;
-    
-    repuesto.estado = 'critico';
-    localStorage.setItem('repuestos_data', JSON.stringify(repuestosData));
-    
-    filtrarRepuestos();
-    actualizarEstadisticas();
-    cargarListaComprasSolicitadas(); 
-    
-    alert(`${repuesto.nombre} marcado como crítico.`);
-}
-
-function solicitarCompra(codigo) {
-    const repuesto = repuestosData.find(r => r.codigo === codigo);
-    if (!repuesto) return;
-    
-    const cantidad = prompt(`¿Cuántas unidades deseas solicitar de ${repuesto.nombre}?`, repuesto.minimo * 2);
-    
-    if (cantidad && parseInt(cantidad) > 0) {
-        repuesto.estado = 'pedido';
-        localStorage.setItem('repuestos_data', JSON.stringify(repuestosData));
-        
-        
-        let compras = JSON.parse(localStorage.getItem('compras_pendientes') || '[]');
-        compras.push({
-            codigo: repuesto.codigo,
-            nombre: repuesto.nombre,
-            cantidad: parseInt(cantidad),
-            proveedor: repuesto.proveedor,
-            precio: repuesto.precio,
-            total: repuesto.precio * parseInt(cantidad),
-            fechaSolicitud: new Date().toISOString(),
-            urgente: repuesto.estado === 'agotado' || repuesto.stock === 0
-        });
-        localStorage.setItem('compras_pendientes', JSON.stringify(compras));
-        
-        filtrarRepuestos();
-        actualizarEstadisticas();
-        cargarListaComprasSolicitadas(); 
-        
-        alert(`Solicitud de compra creada: ${cantidad} unidades de ${repuesto.nombre}`);
-    }
-}
-
-
-function cargarListaComprasSolicitadas() {
-    const tbody = document.getElementById('comprasSolicitadasBody');
-    tbody.innerHTML = '';
-    
-    comprasSolicitadas.forEach((compra, index) => {
-        const fila = document.createElement('tr');
-        fila.innerHTML = `
-            <td>${compra.repuesto}</td>
-            <td>${compra.proveedor || ''}</td>
-            <td>${compra.direccion || ''}</td>
-            <td>${compra.valor ? '$' + compra.valor.toLocaleString('es-CL') : ''}</td>
-            <td class="acciones">
-                <button onclick="editarItemCompra(${index})" class="btn-icon" title="Editar">✏️</button>
-                <button onclick="eliminarItemCompra(${index})" class="btn-icon" title="Eliminar">🗑️</button>
-            </td>
+    ordenesAMostrar.forEach(orden => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${orden.numeroOrden}</td>
+            <td>${orden.cliente?.nombre || 'No especificado'}</td>
+            <td>${orden.equipo?.tipo || 'No especificado'}</td>
+            <td>${orden.equipo?.marca || 'No especificado'}</td>
+            <td>${orden.equipo?.modelo || 'No especificado'}</td>
+            <td>${orden.descripcion?.substring(0, 30)}${orden.descripcion?.length > 30 ? '...' : ''}</td>
+            <td><input type="checkbox" ${orden.listoParaEntregar ? 'checked' : ''} disabled></td>
         `;
-        tbody.appendChild(fila);
+        
+        // Agregar evento clic para mostrar detalles
+        tr.addEventListener('click', function() {
+            mostrarDetallesOrden(orden.numeroOrden);
+        });
+        
+        tbody.appendChild(tr);
     });
-}
-
-function agregarRepuestoACompra() {
-    const repuesto = document.getElementById('inputRepuesto').value.trim();
-    const proveedor = document.getElementById('inputProveedor').value.trim();
-    const direccion = document.getElementById('inputDireccion').value.trim();
-    const valor = parseFloat(document.getElementById('inputValor').value);
-
-    if (!repuesto) {
-        alert('El nombre del repuesto es obligatorio.');
+}// Función para mostrar detalles de una orden específica
+function mostrarDetallesOrden(numeroOrden) {
+    // Encontrar la orden por su número
+    const orden = ordenesData.find(o => o.numeroOrden === numeroOrden);
+    if (!orden) {
+        alert('Orden no encontrada');
         return;
     }
     
-    comprasSolicitadas.push({
-        repuesto,
-        proveedor,
-        direccion,
-        valor
-    });
+    ordenSeleccionada = orden;
     
-    guardarYRecargarCompras();
-    limpiarFormularioCompra();
+    // No necesitamos ocultar la tabla, ambas secciones estarán visibles
+    
+    // Llenar información del cliente
+    document.getElementById('ordenNumero').textContent = orden.numeroOrden;
+    document.getElementById('detalleNombreCliente').textContent = orden.cliente?.nombre || 'No especificado';
+    document.getElementById('detalleRutCliente').textContent = orden.rutCliente || orden.pasaporteCliente || 'No especificado';
+    document.getElementById('detalleTelefonoCliente').textContent = orden.telefonoCliente || 'No especificado';
+    document.getElementById('detalleCorreoCliente').textContent = orden.correoCliente || 'No especificado';
+    document.getElementById('detalleDireccionCliente').textContent = 
+        `${orden.comunaCliente || ''} ${orden.domicilioCliente || ''}`.trim() || 'No especificado';
+    
+    // Llenar información del equipo
+    document.getElementById('detalleTipoEquipo').textContent = orden.equipo?.tipo || 'No especificado';
+    document.getElementById('detalleMarcaEquipo').textContent = orden.equipo?.marca || 'No especificado';
+    document.getElementById('detalleModeloEquipo').textContent = orden.equipo?.modelo || 'No especificado';
+    
+    // Llenar servicios solicitados
+    const listaServicios = document.getElementById('detalleServiciosList');
+    listaServicios.innerHTML = '';
+    
+    if (orden.servicios && orden.servicios.length > 0) {
+        orden.servicios.forEach(servicio => {
+            const li = document.createElement('li');
+            li.textContent = `${servicio} — $${PRECIO_SERVICIO.toLocaleString('es-CL')} CLP`;
+            listaServicios.appendChild(li);
+        });
+        // Mostrar total
+        document.getElementById('detalleTotal').textContent = 
+            (orden.servicios.length * PRECIO_SERVICIO).toLocaleString('es-CL');
+    } else {
+        listaServicios.innerHTML = '<li>No hay servicios especificados</li>';
+        document.getElementById('detalleTotal').textContent = '0';
+    }
+    
+    // Llenar descripción
+    document.getElementById('detalleDescripcion').textContent = orden.descripcion || 'No hay descripción disponible';
+    
+    // Llenar información técnica
+    document.getElementById('detalleTecnico').textContent = orden.tecnico || 'No asignado';
+    document.getElementById('detallePrioridad').textContent = orden.prioridad || 'Normal';
+    document.getElementById('detalleAbono').textContent = (orden.abono || 0).toLocaleString('es-CL');
+    document.getElementById('detalleFecha').textContent = 
+        orden.fecha ? new Date(orden.fecha).toLocaleString('es-CL') : 'No especificado';
+    
+    // Configurar estado "listo para entregar"
+    document.getElementById('marcarListo').checked = orden.listoParaEntregar || false;
+    document.getElementById('observacionesTecnicas').value = orden.observacionesTecnicas || '';
+    
+    // Habilitar campos de edición
+    document.getElementById('observacionesTecnicas').disabled = false;
+    document.getElementById('marcarListo').disabled = false;
+    
+    // Deshabilitamos el botón de guardar inicialmente
+    document.querySelector('.orden-acciones .btn-primary').disabled = !document.getElementById('marcarListo').checked;
 }
 
-function editarItemCompra(index) {
-    const compra = comprasSolicitadas[index];
+// Función para mostrar un mensaje cuando no hay orden seleccionada
+function mostrarMensajeSeleccionOrden() {
+    const detalleOrden = document.querySelector('.orden-detalle-contenido');
     
-    document.getElementById('inputRepuesto').value = compra.repuesto;
-    document.getElementById('inputProveedor').value = compra.proveedor;
-    document.getElementById('inputDireccion').value = compra.direccion;
-    document.getElementById('inputValor').value = compra.valor;
+    // Limpiar el detalle de orden
+    detalleOrden.innerHTML = `
+        <div class="mensaje-seleccion">
+            <h3>Seleccione una orden</h3>
+            <p>Por favor, seleccione una orden de la tabla para ver sus detalles.</p>
+            <div class="icono-seleccion">
+                <i class="fas fa-hand-pointer"></i>
+            </div>
+        </div>
+    `;
     
-    eliminarItemCompra(index);
+    // Deshabilitar campos de edición
+    document.getElementById('observacionesTecnicas').disabled = true;
+    document.getElementById('marcarListo').disabled = true;
+    
+    // Deshabilitar el botón de guardar
+    document.querySelector('.orden-acciones .btn-primary').disabled = true;
 }
 
-function eliminarItemCompra(index) {
-    if (confirm('¿Estás seguro que deseas eliminar este repuesto de la lista?')) {
-        comprasSolicitadas.splice(index, 1);
-        guardarYRecargarCompras();
+// Función para volver a la tabla de órdenes
+function volverATabla() {
+    // Simplemente limpiamos la selección actual
+    ordenSeleccionada = null;
+    
+    // Mostrar mensaje de "ninguna orden seleccionada"
+    mostrarMensajeSeleccionOrden();
+}
+
+// Función para guardar cambios en la orden
+function guardarCambiosOrden() {
+    if (!ordenSeleccionada) {
+        alert('No hay una orden seleccionada');
+        return;
+    }
+    
+    // Verificar si se marcó como listo
+    const listoParaEntregar = document.getElementById('marcarListo').checked;
+    const observacionesTecnicas = document.getElementById('observacionesTecnicas').value.trim();
+    
+    // Actualizar la orden seleccionada
+    ordenSeleccionada.listoParaEntregar = listoParaEntregar;
+    ordenSeleccionada.observacionesTecnicas = observacionesTecnicas;
+    
+    // Actualizar el localStorage
+    guardarCambiosEnStorage();
+    
+    // Actualizar la tabla
+    cargarOrdenes();
+    
+    // Volver a la tabla
+    volverATabla();
+    
+    alert('Cambios guardados correctamente');
+}
+
+// Función para guardar los cambios en localStorage
+function guardarCambiosEnStorage() {
+    // Encontrar la orden en el arreglo
+    const index = ordenesData.findIndex(o => o.numeroOrden === ordenSeleccionada.numeroOrden);
+    if (index !== -1) {
+        ordenesData[index] = ordenSeleccionada;
+        
+        // Guardar en localStorage
+        localStorage.setItem('tecnico_hardware', JSON.stringify(ordenesData));
     }
 }
 
-function guardarYRecargarCompras() {
-    localStorage.setItem('compras_solicitadas', JSON.stringify(comprasSolicitadas));
-    cargarListaComprasSolicitadas();
+// Función para filtrar órdenes
+function filtrarOrdenes() {
+    const fecha = document.getElementById('filtroFecha').value;
+    const tipoEquipo = document.getElementById('filtroEquipo').value;
+    const busqueda = document.getElementById('busqueda').value.toLowerCase();
+    
+    ordenesFiltradas = ordenesData.filter(orden => {
+        // Filtro por fecha
+        let pasaFiltroFecha = true;
+        if (fecha) {
+            const fechaOrden = orden.fecha ? new Date(orden.fecha).toISOString().split('T')[0] : '';
+            pasaFiltroFecha = fechaOrden === fecha;
+        }
+        
+        // Filtro por tipo de equipo
+        let pasaFiltroEquipo = true;
+        if (tipoEquipo) {
+            pasaFiltroEquipo = orden.equipo?.tipo === tipoEquipo;
+        }
+        
+        // Filtro por búsqueda
+        let pasaBusqueda = true;
+        if (busqueda) {
+            const nombreCliente = orden.cliente?.nombre?.toLowerCase() || '';
+            const numeroOrden = orden.numeroOrden?.toLowerCase() || '';
+            pasaBusqueda = nombreCliente.includes(busqueda) || numeroOrden.includes(busqueda);
+        }
+        
+        return pasaFiltroFecha && pasaFiltroEquipo && pasaBusqueda;
+    });
+    
+    cargarTablaOrdenes();
 }
 
-function limpiarFormularioCompra() {
-    document.getElementById('inputRepuesto').value = '';
-    document.getElementById('inputProveedor').value = '';
-    document.getElementById('inputDireccion').value = '';
-    document.getElementById('inputValor').value = '';
+// Función para limpiar filtros
+function limpiarFiltros() {
+    document.getElementById('filtroFecha').value = '';
+    document.getElementById('filtroEquipo').value = '';
+    document.getElementById('busqueda').value = '';
+    
+    ordenesFiltradas = ordenesData.slice(0, 10);
+    cargarTablaOrdenes();
 }
 
-
-
-function generarOrdenCompra() {
-    alert('Generando orden de compra con la lista actual...');
+// Función para actualizar las estadísticas
+function actualizarEstadisticas() {
+    const pendientes = ordenesData.filter(o => !o.listoParaEntregar).length;
+    const enProceso = ordenesData.filter(o => !o.listoParaEntregar && o.observacionesTecnicas).length;
+    const listos = ordenesData.filter(o => o.listoParaEntregar).length;
+    const total = ordenesData.length;
+    
+    document.getElementById('statPendientes').textContent = pendientes;
+    document.getElementById('statEnProceso').textContent = enProceso;
+    document.getElementById('statListos').textContent = listos;
+    document.getElementById('statTotal').textContent = total;
 }
 
-function contactarProveedor() {
-    alert('Abriendo sistema de contacto con proveedores...\n(Funcionalidad pendiente de implementar)');
+// Función auxiliar para formatear fechas
+function formatearFecha(fechaISO) {
+    if (!fechaISO) return 'No especificada';
+    
+    const fecha = new Date(fechaISO);
+    return fecha.toLocaleDateString('es-CL', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
 }
 
+// Función para exportar el listado de órdenes
 function exportarInventario() {
-    alert('Exportando inventario completo...\n(Funcionalidad de exportación pendiente)');
+    alert('Exportando listado de órdenes...');
+    // Implementación pendiente
+}
+
+// Función para obtener un valor seguro (evitar undefined)
+function valorSeguro(valor, valorPorDefecto = 'No especificado') {
+    return valor || valorPorDefecto;
+}
+
+// Exportar inventario - Función de ejemplo para una futura implementación
+function exportarInventario() {
+    alert('Exportando listado de órdenes...\n(Funcionalidad pendiente de implementar)');
 }

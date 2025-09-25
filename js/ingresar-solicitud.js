@@ -1,3 +1,82 @@
+// --- Carrito de servicios ---
+let carritoServicios = [];
+const PRECIO_SERVICIO = 5000; // Precio fijo por servicio
+
+function renderizarCarritoServicios() {
+    const ul = document.getElementById('carritoServicios');
+    ul.innerHTML = '';
+    carritoServicios.forEach((serv, idx) => {
+        const li = document.createElement('li');
+        li.textContent = `${serv} — $${PRECIO_SERVICIO.toLocaleString('es-CL')} CLP`;
+        // Botón para eliminar servicio del carrito
+        const btn = document.createElement('button');
+        btn.textContent = '✖';
+        btn.type = 'button';
+        btn.style.marginLeft = '0.5em';
+        btn.onclick = function() {
+            carritoServicios.splice(idx, 1);
+            renderizarCarritoServicios();
+        };
+        li.appendChild(btn);
+        ul.appendChild(li);
+    });
+    // Mostrar total
+    let total = carritoServicios.length * PRECIO_SERVICIO;
+    let totalDiv = document.getElementById('carritoTotalServicios');
+    if (!totalDiv) {
+        totalDiv = document.createElement('div');
+        totalDiv.id = 'carritoTotalServicios';
+        totalDiv.style.marginTop = '10px';
+        totalDiv.style.fontWeight = 'bold';
+        ul.parentElement.appendChild(totalDiv);
+    }
+    totalDiv.textContent = `Total: $${total.toLocaleString('es-CL')} CLP`;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // ...existing code...
+    const agregarServicioBtn = document.getElementById('agregarServicioBtn');
+    if (agregarServicioBtn) {
+        agregarServicioBtn.addEventListener('click', function() {
+            const select = document.getElementById('tipoServicio');
+            const nombre = select.options[select.selectedIndex].text;
+            const valor = select.value;
+            if (valor && !carritoServicios.includes(nombre)) {
+                carritoServicios.push(nombre);
+                renderizarCarritoServicios();
+            }
+        });
+    }
+    
+    // Mostrar la fecha actual en el campo de fecha de registro
+    const fechaRegistroInput = document.getElementById('fechaRegistro');
+    if (fechaRegistroInput) {
+        const fechaActual = new Date();
+        const opcionesFecha = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        };
+        fechaRegistroInput.value = fechaActual.toLocaleDateString('es-CL', opcionesFecha);
+    }
+    
+    renderizarCarritoServicios();
+});
+// Alterna entre RUT y Pasaporte en el formulario de cliente
+function alternarRutPasaporte() {
+    const usarPasaporte = document.getElementById('usarPasaporte').checked;
+    document.getElementById('rutCliente').disabled = usarPasaporte;
+    document.getElementById('rutCliente').required = !usarPasaporte;
+    document.getElementById('pasaporteCliente').disabled = !usarPasaporte;
+    document.getElementById('pasaporteCliente').required = usarPasaporte;
+    if (usarPasaporte) {
+        document.getElementById('rutCliente').value = '';
+    } else {
+        document.getElementById('pasaporteCliente').value = '';
+    }
+}
 document.addEventListener('DOMContentLoaded', function() {
     
     initializeSolicitudForm();
@@ -8,7 +87,7 @@ function verificarAutenticacion() {
     
 }
 
-// a
+
 let repuestosSolicitud = [];
 
 
@@ -119,54 +198,72 @@ function procesarSolicitud() {
     if (!validarFormulario()) {
         return;
     }
-    
+    // Obtener datos del formulario
     const formData = obtenerDatosFormulario();
-    const numeroOrden = generarNumeroOrden();
-    
-    
-    guardarSolicitud(formData, numeroOrden);
-    
-    
+    // Generar número de orden autoincremental
+    const numeroOrden = obtenerSiguienteNumeroOrden();
+    // Mostrar el número en el campo correspondiente (ahora lo guardamos para el modal)
+    // Preparar datos de la orden
+    const datosOrden = {
+        ...formData,
+        numeroOrden,
+        servicios: [...carritoServicios],
+        abono: document.getElementById('incluirAbono').checked ? Number(document.getElementById('abonoMonto').value) : 0,
+        tecnico: document.getElementById('tecnicoResponsable').value.trim(),
+        prioridad: document.getElementById('prioridad').value,
+        descripcion: document.getElementById('descripcionProblema').value.trim(),
+        fecha: new Date().toISOString(),
+        fechaRegistro: document.getElementById('fechaRegistro').value
+    };
+    // Guardar la orden según tipo
+    guardarOrdenPorTipo(datosOrden);
+    // Mostrar modal de confirmación
     mostrarModalConfirmacion(numeroOrden);
-    
-   
+    // Limpiar carrito y formulario
+    carritoServicios = [];
+    renderizarCarritoServicios();
     localStorage.removeItem('solicitud_borrador');
 }
 
 function validarFormulario() {
     const campos = [
-        'clienteNombre', 'clienteRut', 'clienteTelefono',
-        'equipoTipo', 'equipoMarca', 'tipoServicio', 
-        'prioridad', 'problemaDescripcion'
+        'nombreCliente', 'telefonoCliente',
+        'tipoEquipo', 'marcaEquipo', 'prioridad', 'descripcionProblema', 'tecnicoResponsable'
     ];
-    
     for (let campo of campos) {
         const elemento = document.getElementById(campo);
-        if (!elemento.value.trim()) {
-            alert(`El campo "${elemento.previousElementSibling.textContent}" es obligatorio.`);
-            elemento.focus();
+        if (!elemento || !elemento.value.trim()) {
+            alert(`El campo "${elemento && elemento.previousElementSibling ? elemento.previousElementSibling.textContent : campo}" es obligatorio.`);
+            if (elemento) elemento.focus();
             return false;
         }
     }
-    
-    const abonoCheckbox = document.getElementById('abono');
-    const abonoCantidadInput = document.getElementById('abonoCantidad');
-    if (abonoCheckbox.checked) {
-        if (!abonoCantidadInput.value.trim() || Number(abonoCantidadInput.value) < 0) {
-            alert('Debe ingresar un monto válido para el abono inicial.');
-            abonoCantidadInput.focus();
-            return false;
-        }
-    }
-    
-    
-    const rut = document.getElementById('clienteRut').value;
-    if (!validarRUT(rut)) {
-        alert('El formato del RUT no es válido.');
-        document.getElementById('clienteRut').focus();
+    // Validar carrito de servicios
+    if (!carritoServicios || carritoServicios.length === 0) {
+        alert('Debes agregar al menos un servicio al carrito.');
+        document.getElementById('tipoServicio').focus();
         return false;
     }
-    
+    // Validar abono si está visible
+    const abonoCheckbox = document.getElementById('incluirAbono');
+    const abonoMontoInput = document.getElementById('abonoMonto');
+    if (abonoCheckbox && abonoCheckbox.checked) {
+        if (!abonoMontoInput.value.trim() || Number(abonoMontoInput.value) < 0) {
+            alert('Debe ingresar un monto válido para el abono.');
+            abonoMontoInput.focus();
+            return false;
+        }
+    }
+    // Validar RUT si está habilitado
+    const rutInput = document.getElementById('rutCliente');
+    if (rutInput && !rutInput.disabled) {
+        const rut = rutInput.value;
+        if (!validarRUT(rut)) {
+            alert('El formato del RUT no es válido.');
+            rutInput.focus();
+            return false;
+        }
+    }
     return true;
 }
 
@@ -302,4 +399,35 @@ function nuevaSolicitud() {
 
 function volverMenu() {
     window.location.href = 'menu-ventas.html';
+}
+
+function obtenerSiguienteNumeroOrden() {
+    let ultimo = parseInt(localStorage.getItem('ultimo_numero_orden') || '0', 10);
+    ultimo = isNaN(ultimo) ? 0 : ultimo + 1;
+    if (ultimo > 99999) ultimo = 1;
+    localStorage.setItem('ultimo_numero_orden', ultimo);
+    return String(ultimo).padStart(5, '0');
+}
+
+function guardarOrdenPorTipo(datosOrden) {
+    // Determinar si es hardware o software
+    const serviciosHardware = [
+        'Problemas de hardware', 'Sobrecalentamiento', 'Mantención general'
+    ];
+    const serviciosSoftware = [
+        'Instalación de sistema operativo', 'Actualizaciones de sistema operativo', 'Instalación de software', 'Eliminación de virus', 'Formateo', 'Respaldos'
+    ];
+    let destino = 'tecnico_general';
+    for (const s of datosOrden.servicios) {
+        if (serviciosHardware.includes(s)) destino = 'tecnico_hardware';
+        if (serviciosSoftware.includes(s)) destino = 'tecnico_software';
+    }
+    // Si hay ambos tipos, se prioriza hardware
+    if (destino === 'tecnico_software' && datosOrden.servicios.some(s => serviciosHardware.includes(s))) {
+        destino = 'tecnico_hardware';
+    }
+    // Guardar en localStorage
+    let lista = JSON.parse(localStorage.getItem(destino) || '[]');
+    lista.push(datosOrden);
+    localStorage.setItem(destino, JSON.stringify(lista));
 }

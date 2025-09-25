@@ -16,218 +16,126 @@
             <nav>
                 <ul>
                     <li><a href="menu-ventas.html">← Volver al Menú</a></li>
-                    <li><a href="#" onclick="exportarInventario()">Exportar</a></li>
-                    <li><a href="#" onclick="agregarRepuesto()">Agregar Repuesto</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    
-    <main>
-        <div class="hardware-container">
-            <div class="ordenes-cambio-section">
-                <h3>🔄 Órdenes con Cambio de Piezas (Mantención/Actualización)</h3>
-                <div class="tabla-container">
-                    <table class="tabla-hardware">
-                        <thead>
-                            <tr>
-                                <th>N° Orden</th>
-                                <th>Cliente</th>
-                                <th>Equipo</th>
-                                <th>Descripción</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ordenesCambioPiezasBody">
+
+        <main>
+            <div class="hardware-container">
+                <div class="secciones-container">
+                <section class="ordenes-section">
+                    <h3>📋 Tabla de Órdenes</h3>
+                    <p>Lista de las órdenes más recientes. Haz clic en cualquier orden para ver sus detalles completos.</p>
+                    <div class="filtros-section">
+                        <div class="filtros-container">
+                            <div class="filtro-group">
+                                <label for="filtroFecha">Fecha:</label>
+                                <input type="date" id="filtroFecha">
+                            </div>
+                            <div class="filtro-group">
+                                <label for="filtroEquipo">Tipo de equipo:</label>
+                                <select id="filtroEquipo">
+                                    <option value="">Todos</option>
+                                    <option value="notebook">Notebook</option>
+                                    <option value="pc">PC de Escritorio</option>
+                                    <option value="allinone">All-in-One</option>
+                                    <option value="servidor">Servidor</option>
+                                    <option value="mini-pc">Mini PC</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                            <div class="filtro-group">
+                                <label for="busqueda">Buscar:</label>
+                                <input type="text" id="busqueda" placeholder="N° orden o cliente...">
+                            </div>
+                            <button onclick="limpiarFiltros()" class="btn-secondary">Limpiar Filtros</button>
+                        </div>
+                    </div>
+                    <div class="tabla-container">
+                        <table class="tabla-hardware">
+                            <thead>
+                                <tr>
+                                    <th>N° Orden</th>
+                                    <th>Nombre Cliente</th>
+                                    <th>Tipo Equipo</th>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <th>Descripción</th>
+                                    <th>Listo para entregar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaOrdenesBody">
+                                <!-- Las filas se cargarán dinámicamente desde JS -->
                             </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="hardware-header">
-                <h1>Gestión de Hardware y Repuestos</h1>
-                <p>Control de inventario, repuestos críticos y compras pendientes</p>
-            </div>
-
-            <div class="filtros-section">
-                <div class="filtros-container">
-                    <div class="filtro-group">
-                        <label for="filtroCategoria">Categoría:</label>
-                        <select id="filtroCategoria" onchange="filtrarRepuestos()">
-                            <option value="">Todas</option>
-                            <option value="procesador">Procesadores</option>
-                            <option value="memoria">Memoria RAM</option>
-                            <option value="almacenamiento">Almacenamiento</option>
-                            <option value="tarjeta-video">Tarjetas de Video</option>
-                            <option value="fuente">Fuentes de Poder</option>
-                            <option value="placa-madre">Placas Madre</option>
-                            <option value="refrigeracion">Refrigeración</option>
-                            <option value="cables">Cables y Conectores</option>
-                            <option value="otros">Otros</option>
-                        </select>
+                        </table>
                     </div>
-                    
-                    <div class="filtro-group">
-                        <label for="filtroEstado">Estado:</label>
-                        <select id="filtroEstado" onchange="filtrarRepuestos()">
-                            <option value="">Todos</option>
-                            <option value="disponible">Disponible</option>
-                            <option value="critico">Crítico</option>
-                            <option value="agotado">Agotado</option>
-                            <option value="pedido">En Pedido</option>
-                        </select>
+                </section>
+
+                <section class="orden-detalle-section" id="ordenDetalleSection">
+                    <h3>🔍 Información de la Orden <span id="ordenNumero"></span></h3>
+                    <div class="orden-detalle-contenido">
+                      <div class="orden-detalle-container">
+                        <div class="orden-detalle-cliente">
+                            <h4>Información del Cliente</h4>
+                            <p><strong>Nombre:</strong> <span id="detalleNombreCliente"></span></p>
+                            <p><strong>RUT/Pasaporte:</strong> <span id="detalleRutCliente"></span></p>
+                            <p><strong>Teléfono:</strong> <span id="detalleTelefonoCliente"></span></p>
+                            <p><strong>Correo:</strong> <span id="detalleCorreoCliente"></span></p>
+                            <p><strong>Dirección:</strong> <span id="detalleDireccionCliente"></span></p>
+                        </div>
+                        <div class="orden-detalle-equipo">
+                            <h4>Información del Equipo</h4>
+                            <p><strong>Tipo:</strong> <span id="detalleTipoEquipo"></span></p>
+                            <p><strong>Marca:</strong> <span id="detalleMarcaEquipo"></span></p>
+                            <p><strong>Modelo:</strong> <span id="detalleModeloEquipo"></span></p>
+                        </div>
+                        <div class="orden-detalle-servicios">
+                            <h4>Servicios Solicitados</h4>
+                            <ul id="detalleServiciosList">
+                                <!-- Los servicios se cargarán dinámicamente -->
+                            </ul>
+                            <p><strong>Total:</strong> $<span id="detalleTotal"></span> CLP</p>
+                        </div>
+                        <div class="orden-detalle-observaciones">
+                            <h4>Descripción del Problema</h4>
+                            <p id="detalleDescripcion"></p>
+                        </div>
+                        <div class="orden-detalle-tecnico">
+                            <h4>Información Técnica</h4>
+                            <p><strong>Técnico responsable:</strong> <span id="detalleTecnico"></span></p>
+                            <p><strong>Prioridad:</strong> <span id="detallePrioridad"></span></p>
+                            <p><strong>Abono:</strong> $<span id="detalleAbono"></span> CLP</p>
+                            <p><strong>Fecha de ingreso:</strong> <span id="detalleFecha"></span></p>
+                        </div>
+                      </div>
                     </div>
-
-                    <div class="filtro-group">
-                        <label for="busqueda">Buscar:</label>
-                        <input type="text" id="busqueda" placeholder="Buscar por nombre o código..." onkeyup="filtrarRepuestos()">
-                    </div>
-
-                    <button onclick="limpiarFiltros()" class="btn-secondary">Limpiar Filtros</button>
-                </div>
-            </div>
-
-            <div class="stats-hardware">
-                <div class="stat-card critico">
-                    <h4>Repuestos Críticos</h4>
-                    <div class="stat-number" id="statCriticos">0</div>
-                    <p>Requieren compra urgente</p>
-                </div>
-                <div class="stat-card agotado">
-                    <h4>Agotados</h4>
-                    <div class="stat-number" id="statAgotados">0</div>
-                    <p>Sin stock disponible</p>
-                </div>
-                <div class="stat-card pedido">
-                    <h4>En Pedido</h4>
-                    <div class="stat-number" id="statPedidos">0</div>
-                    <p>Compras en proceso</p>
-                </div>
-                <div class="stat-card total">
-                    <h4>Total Items</h4>
-                    <div class="stat-number" id="statTotal">0</div>
-                    <p>En inventario</p>
-                </div>
-            </div>
-
-            <div class="tabla-container">
-                <table id="tablaRepuestos" class="tabla-hardware">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Producto</th>
-                            <th>Categoría</th>
-                            <th>Stock</th>
-                            <th>Mínimo</th>
-                            <th>Precio</th>
-                            <th>Estado</th>
-                            <th>Proveedor</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaRepuestosBody">
-                        </tbody>
-                </table>
-            </div>
-
-            <div class="compras-section">
-                <h3>🛒 Repuestos Solicitados para Compra</h3>
-                <p>Usa este formulario para agregar los repuestos que necesitan ser comprados. Puedes editar o eliminar los elementos de la lista.</p>
-
-                <div class="form-section form-inline">
-                    <input type="text" id="inputRepuesto" placeholder="Nombre del Repuesto" required>
-                    <input type="text" id="inputProveedor" placeholder="Proveedor">
-                    <input type="text" id="inputDireccion" placeholder="Dirección">
-                    <input type="number" id="inputValor" placeholder="Valor ($)" min="0">
-                    <button type="button" class="btn-primary" onclick="agregarRepuestoACompra()">Agregar</button>
-                    <button type="button" class="btn-secondary" onclick="limpiarFormularioCompra()">Limpiar</button>
-                </div>
-
-                <div class="tabla-container">
-                    <table class="tabla-hardware">
-                        <thead>
-                            <tr>
-                                <th>Repuesto</th>
-                                <th>Proveedor</th>
-                                <th>Dirección</th>
-                                <th>Valor ($)</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="comprasSolicitadasBody">
-                            </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div id="modalRepuesto" class="modal" style="display: none;">
-            <div class="modal-content">
-                <h3 id="modalTitulo">Agregar Nuevo Repuesto</h3>
-                <form id="formRepuesto">
-                    <div class="form-row">
+                    <div class="orden-acciones">
                         <div class="form-group">
-                            <label for="modalCodigo">Código*</label>
-                            <input type="text" id="modalCodigo" required>
+                            <label for="observacionesTecnicas">Observaciones técnicas:</label>
+                            <textarea id="observacionesTecnicas" rows="3"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="modalNombre">Nombre del Producto*</label>
-                            <input type="text" id="modalNombre" required>
+                            <input type="checkbox" id="marcarListo">
+                            <label for="marcarListo">Marcar como listo para entregar</label>
+                        </div>
+                        <div class="form-row" style="justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+                            <button type="button" class="btn-secondary" onclick="volverATabla()">Volver</button>
+                            <button type="button" class="btn-primary" onclick="guardarCambiosOrden()">Guardar cambios</button>
                         </div>
                     </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="modalCategoria">Categoría*</label>
-                            <select id="modalCategoria" required>
-                                <option value="">Seleccionar...</option>
-                                <option value="procesador">Procesadores</option>
-                                <option value="memoria">Memoria RAM</option>
-                                <option value="almacenamiento">Almacenamiento</option>
-                                <option value="tarjeta-video">Tarjetas de Video</option>
-                                <option value="fuente">Fuentes de Poder</option>
-                                <option value="placa-madre">Placas Madre</option>
-                                <option value="refrigeracion">Refrigeración</option>
-                                <option value="cables">Cables y Conectores</option>
-                                <option value="otros">Otros</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="modalProveedor">Proveedor</label>
-                            <input type="text" id="modalProveedor">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="modalStock">Stock Actual*</label>
-                            <input type="number" id="modalStock" min="0" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="modalMinimo">Stock Mínimo*</label>
-                            <input type="number" id="modalMinimo" min="0" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="modalPrecio">Precio ($)</label>
-                        <input type="number" id="modalPrecio" min="0" step="0.01">
-                    </div>
-                    
-                    <div class="modal-actions">
-                        <button type="button" onclick="cerrarModal()" class="btn-secondary">Cancelar</button>
-                        <button type="submit" class="btn-primary">Guardar</button>
-                    </div>
-                </form>
+                </section>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
 
     <footer class="footer">
         <p>&copy; 2024 PC Full. Todos los derechos reservados.</p>
     </footer>
 
+    <!-- Fontawesome para iconos -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="js/hardware-repuestos.js"></script>
-    <script src="js/ordenes-mantencion.js"></script>
 </body>
 </html>

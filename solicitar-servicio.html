@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Full - Solicitar Servicio</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/ingresar-solicitud.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span>💻 PC Full - Solicitar Servicio</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="client.html">← Volver</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="solicitud-container">
+            <div class="solicitud-header">
+                <h1>Solicitud de Servicio Técnico</h1>
+                <p>Complete el formulario a continuación para solicitar nuestros servicios técnicos.</p>
+            </div>
+            
+            <form class="solicitud-form" id="solicitudForm" autocomplete="off">
+                <section class="form-section" id="seccion-cliente">
+                    <h3>Información del cliente</h3>
+                    <div class="form-group">
+                        <label for="nombreCliente">Nombre completo*</label>
+                        <input type="text" id="nombreCliente" name="nombreCliente" required autocomplete="off">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rutCliente">RUT*</label>
+                            <input type="text" id="rutCliente" name="rutCliente" required pattern="^\d{1,2}\.?(\d{3})\.?(\d{3})-(\d|k|K)$" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="pasaporteCliente">Pasaporte*</label>
+                            <input type="text" id="pasaporteCliente" name="pasaporteCliente" disabled autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:1rem;">
+                        <input type="checkbox" id="usarPasaporte" name="usarPasaporte" onchange="alternarRutPasaporte()">
+                        <label for="usarPasaporte" style="display:inline;">Usar pasaporte en vez de RUT</label>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="telefonoCliente">Teléfono*</label>
+                            <input type="tel" id="telefonoCliente" name="telefonoCliente" required autocomplete="off" placeholder="Ej: +56 9 1234 5678">
+                        </div>
+                        <div class="form-group">
+                            <label for="correoCliente">Correo electrónico*</label>
+                            <input type="email" id="correoCliente" name="correoCliente" required autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="comunaCliente">Comuna</label>
+                                <input type="text" id="comunaCliente" name="comunaCliente" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="domicilioCliente">Domicilio</label>
+                                <input type="text" id="domicilioCliente" name="domicilioCliente" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="form-section" id="seccion-equipo">
+                    <h3>Información del equipo</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tipoEquipo">Tipo de equipo*</label>
+                            <select id="tipoEquipo" name="tipoEquipo" required>
+                                <option value="">Selecciona una opción</option>
+                                <option value="notebook">Notebook</option>
+                                <option value="pc">PC de Escritorio</option>
+                                <option value="allinone">All-in-One</option>
+                                <option value="servidor">Servidor</option>
+                                <option value="mini-pc">Mini PC</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="marcaEquipo">Marca*</label>
+                            <input type="text" id="marcaEquipo" name="marcaEquipo" required autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modeloEquipo">Modelo</label>
+                        <input type="text" id="modeloEquipo" name="modeloEquipo" autocomplete="off">
+                    </div>
+                </section>
+                <section class="form-section" id="seccion-servicio">
+                    <h3>Detalles del servicio</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tipoServicio">Tipo de servicio*</label>
+                            <select id="tipoServicio" name="tipoServicio">
+                                <option value="">Selecciona un servicio</option>
+                                <option value="instalacion-so">Instalación de sistema operativo</option>
+                                <option value="actualizacion-so">Actualizaciones de sistema operativo</option>
+                                <option value="problemas-hardware">Problemas de hardware</option>
+                                <option value="instalacion-software">Instalación de software</option>
+                                <option value="eliminacion-virus">Eliminación de virus</option>
+                                <option value="mantencion-general">Mantención general</option>
+                                <option value="sobrecalentamiento">Sobrecalentamiento</option>
+                                <option value="formateo">Formateo</option>
+                                <option value="respaldos">Respaldos</option>
+                            </select>
+                        </div>
+                        <div class="form-group input-with-button" style="align-items:end;">
+                            <button type="button" id="agregarServicioBtn">Agregar</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Servicios seleccionados:</label>
+                        <ul id="carritoServicios" style="margin:0; padding-left:1.2em;"></ul>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcionProblema">Descripción del problema*</label>
+                        <textarea id="descripcionProblema" name="descripcionProblema" maxlength="500" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaRegistro">Fecha de solicitud</label>
+                        <input type="text" id="fechaRegistro" name="fechaRegistro" readonly style="font-weight:bold;">
+                    </div>
+                    <div class="form-row" style="justify-content: flex-end; gap:1rem;">
+                        <button type="button" class="btn-secondary" onclick="limpiarFormulario()">Limpiar formulario</button>
+                        <button type="submit" class="btn-primary">Enviar solicitud</button>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </main>
+
+    <div id="modalConfirmacion" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3>✅ Solicitud Enviada Correctamente</h3>
+            <p>Su número de orden es: <span id="numeroOrdenGenerado"></span></p>
+            <p>Guarde este número para consultar el estado de su solicitud.</p>
+            <div class="modal-actions">
+                <button onclick="nuevaSolicitud()" class="btn-secondary">Nueva Solicitud</button>
+                <button onclick="volverInicio()" class="btn-primary">Volver al Inicio</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2024 PC Full. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/solicitar-servicio.js"></script>
+</body>
+</html>

@@ -41,149 +41,139 @@
     </header>
 
     <main>
-        <div class="form-container">
-            <form id="solicitudForm">
-                <section class="form-section">
-                    <h3>Información del Cliente</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="clienteNombre">Nombre Completo*</label>
-                            <input type="text" id="clienteNombre" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="clienteRut">RUT*</label>
-                            <input type="text" id="clienteRut" placeholder="Ej: 12345678-9" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="clienteTelefono">Teléfono*</label>
-                            <input type="tel" id="clienteTelefono" placeholder="Ej: +56 9 1234 5678" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="clienteEmail">Correo Electrónico</label>
-                            <input type="email" id="clienteEmail">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="clienteDireccion">Dirección</label>
-                        <input type="text" id="clienteDireccion">
-                    </div>
-                </section>
-
-                <section class="form-section">
-                    <h3>Información del Equipo</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="equipoTipo">Tipo de Equipo*</label>
-                            <select id="equipoTipo" required>
-                                <option value="">Seleccionar...</option>
-                                <option value="notebook">Notebook</option>
-                                <option value="pc-escritorio">PC de Escritorio</option>
-                                <option value="servidor">Servidor</option>
-                                <option value="monitor">Monitor</option>
-                                <option value="impresora">Impresora</option>
-                                <option value="otro">Otro</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="equipoMarca">Marca*</label>
-                            <input type="text" id="equipoMarca" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="equipoModelo">Modelo</label>
-                            <input type="text" id="equipoModelo">
-                        </div>
-                        <div class="form-group">
-                            <label for="equipoSerial">N° de Serie</label>
-                            <input type="text" id="equipoSerial">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="equipoAccesorios">Accesorios Incluidos</label>
-                        <textarea id="equipoAccesorios" rows="2" placeholder="Ej: Cargador, mouse, teclado, etc."></textarea>
-                    </div>
-                </section>
-
-                
-                <section class="form-section">
-                    <h3>Detalles del Servicio</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="tipoServicio">Tipo de Servicio*</label>
-                            <select id="tipoServicio" required>
-                                <option value="">Seleccionar...</option>
-                                <option value="reparacion">Reparación</option>
-                                <option value="mantencion">Mantención Preventiva</option>
-                                <option value="actualizacion">Actualización de Componentes</option>
-                                <option value="diagnostico">Solo Diagnóstico</option>
-                                <option value="otro">Otro</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="prioridad">Prioridad*</label>
-                            <select id="prioridad" required>
-                                <option value="normal">Normal</option>
-                                <option value="alta">Alta</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="problemaDescripcion">Descripción del Problema*</label>
-                        <textarea id="problemaDescripcion" rows="4" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="sintomas">Síntomas del equipo (ej: no enciende, se reinicia, etc.):</label>
-                        <textarea id="sintomas" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="observaciones">Observaciones adicionales:</label>
-                        <textarea id="observaciones" rows="3"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="repuestosNecesariosInput">Repuestos Necesarios (opcional):</label>
-                        <div class="input-with-button">
-                            <input type="text" id="repuestosNecesariosInput" placeholder="Ej: Placa madre B550, Disco SSD 500GB">
-                            <button type="button" class="btn-secondary" onclick="agregarRepuestoManual()">+</button>
-                        </div>
-                    </div>
-                    <div id="listaRepuestosNecesarios">
-                        </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="fechaEntrega">Fecha Estimada de Entrega</label>
-                            <input type="date" id="fechaEntrega">
-                        </div>
-                        <div class="form-group">
-                            <label for="costoEstimado">Costo Estimado ($)</label>
-                            <input type="number" id="costoEstimado" min="0">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="garantia">
-                            <input type="checkbox" id="garantia"> ¿Es servicio de garantía?
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="abono">
-                            <input type="checkbox" id="abono"> Abono Inicial
-                        </label>
-                        <div id="abonoCantidadGroup" style="display: none;">
-                            <label for="abonoCantidad">Monto del Abono ($)</label>
-                            <input type="number" id="abonoCantidad" min="0" disabled>
-                        </div>
-                    </div>
-                </section>
-                
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">Ingresar Solicitud</button>
+        <form class="solicitud-form" id="solicitudForm" autocomplete="off">
+            <section class="form-section" id="seccion-cliente">
+                <h3>Información del cliente</h3>
+                <div class="form-group">
+                    <label for="nombreCliente">Nombre completo*</label>
+                    <input type="text" id="nombreCliente" name="nombreCliente" required autocomplete="off">
                 </div>
-            </form>
-        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="rutCliente">RUT*</label>
+                        <input type="text" id="rutCliente" name="rutCliente" required pattern="^\d{1,2}\.?(\d{3})\.?(\d{3})-(\d|k|K)$" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="pasaporteCliente">Pasaporte*</label>
+                        <input type="text" id="pasaporteCliente" name="pasaporteCliente" disabled autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom:1rem;">
+                    <input type="checkbox" id="usarPasaporte" name="usarPasaporte" onchange="alternarRutPasaporte()">
+                    <label for="usarPasaporte" style="display:inline;">Usar pasaporte en vez de RUT</label>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telefonoCliente">Teléfono*</label>
+                        <input type="tel" id="telefonoCliente" name="telefonoCliente" required autocomplete="off" placeholder="Ej: +56 9 1234 5678">
+                    </div>
+                    <div class="form-group">
+                        <label for="correoCliente">Correo electrónico*</label>
+                        <input type="email" id="correoCliente" name="correoCliente" required autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="comunaCliente">Comuna</label>
+                            <input type="text" id="comunaCliente" name="comunaCliente" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="domicilioCliente">Domicilio</label>
+                            <input type="text" id="domicilioCliente" name="domicilioCliente" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="form-section" id="seccion-equipo">
+                <h3>Información del equipo</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipoEquipo">Tipo de equipo*</label>
+                        <select id="tipoEquipo" name="tipoEquipo" required>
+                            <option value="">Selecciona una opción</option>
+                            <option value="notebook">Notebook</option>
+                            <option value="pc">PC de Escritorio</option>
+                            <option value="allinone">All-in-One</option>
+                            <option value="servidor">Servidor</option>
+                            <option value="mini-pc">Mini PC</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="marcaEquipo">Marca*</label>
+                        <input type="text" id="marcaEquipo" name="marcaEquipo" required autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="modeloEquipo">Modelo</label>
+                    <input type="text" id="modeloEquipo" name="modeloEquipo" autocomplete="off">
+                </div>
+            </section>
+            <!-- Siguiente sección irá después -->
+            <section class="form-section" id="seccion-servicio">
+                <h3>Detalles del servicio</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipoServicio">Tipo de servicio*</label>
+                        <select id="tipoServicio" name="tipoServicio">
+                            <option value="">Selecciona un servicio</option>
+                            <option value="instalacion-so">Instalación de sistema operativo</option>
+                            <option value="actualizacion-so">Actualizaciones de sistema operativo</option>
+                            <option value="problemas-hardware">Problemas de hardware</option>
+                            <option value="instalacion-software">Instalación de software</option>
+                            <option value="eliminacion-virus">Eliminación de virus</option>
+                            <option value="mantencion-general">Mantención general</option>
+                            <option value="sobrecalentamiento">Sobrecalentamiento</option>
+                            <option value="formateo">Formateo</option>
+                            <option value="respaldos">Respaldos</option>
+                        </select>
+                    </div>
+                    <div class="form-group input-with-button" style="align-items:end;">
+                        <button type="button" id="agregarServicioBtn">Agregar</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Carrito de compra (servicios seleccionados):</label>
+                    <ul id="carritoServicios" style="margin:0; padding-left:1.2em;"></ul>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prioridad">Prioridad*</label>
+                        <select id="prioridad" name="prioridad" required>
+                            <option value="normal">Normal</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tecnicoResponsable">Técnico responsable*</label>
+                        <input type="text" id="tecnicoResponsable" name="tecnicoResponsable" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaRegistro">Fecha de registro</label>
+                        <input type="text" id="fechaRegistro" name="fechaRegistro" readonly style="font-weight:bold;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="descripcionProblema">Descripción del problema*</label>
+                    <textarea id="descripcionProblema" name="descripcionProblema" maxlength="500" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="incluirAbono" name="incluirAbono" onchange="document.getElementById('abonoGroup').style.display=this.checked?'block':'none'">
+                    <label for="incluirAbono" style="display:inline;">Incluir abono en la boleta</label>
+                </div>
+                <div class="form-group" id="abonoGroup" style="display:none;">
+                    <label for="abonoMonto">Monto del abono</label>
+                    <input type="number" id="abonoMonto" name="abonoMonto" min="0">
+                </div>
+                <div class="form-row" style="justify-content: flex-end; gap:1rem;">
+                    <button type="button" class="btn-secondary" onclick="limpiarFormulario()">Limpiar orden</button>
+                    <button type="submit" class="btn-primary">Agregar</button>
+                </div>
+            </section>
+
+
+        </form>
     </main>
 
     <div id="modalConfirmacion" class="modal" style="display: none;">

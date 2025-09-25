@@ -24,20 +24,20 @@
 
     <main>
         <div class="menu-ventas-container">
-            <div class="menu-header">
+            <section class="menu-header">
                 <h1>Sistema de Gestión PC Full</h1>
                 <p>Panel de control para el equipo de ventas</p>
-            </div>
+            </section>
 
-            <div class="user-info">
+            <section class="user-info">
                 <div>
                     <strong>Bienvenido:</strong> <span id="usuarioActual">Usuario</span> |
                     <span id="fechaActual"></span>
                 </div>
                 <button class="logout-btn" onclick="cerrarSesion()">Cerrar Sesión</button>
-            </div>
+            </section>
 
-            <div class="menu-grid">
+            <section class="menu-grid">
                 <!-- Botón 1: Ingreso de Solicitudes -->
                 <div class="menu-item disponible" onclick="irAIngresarSolicitud()">
                     <div class="icon">📝</div>
@@ -58,18 +58,10 @@
                     <h3>Reportes y Estadísticas</h3>
                     <p>Generar reportes de ventas, servicios y estadísticas del negocio. (Próximamente)</p>
                 </div>
+            </section>
 
-                <!-- Botón 4: Próximamente -->
-                <div class="menu-item proximamente" onclick="mostrarProximamente('Clientes')">
-                    <div class="icon">👥</div>
-                    <h3>Gestión de Clientes</h3>
-                    <p>Administrar base de datos de clientes y historial de servicios. (Próximamente)</p>
-                </div>
-            </div>
-
-            
             <!-- Panel de información adicional -->
-            <div class="info-panels" style="margin-top: 3rem;">
+            <!-- <section class="info-panels" style="margin-top: 3rem;">
                 <div class="info-grid">
                     <div class="info-card">
                         <h4>Solicitudes Pendientes</h4>
@@ -87,7 +79,7 @@
                         <p>Nuevas solicitudes</p>
                     </div>
                 </div>
-            </div>
+            </section> -->
         </div>
     </main>
 
