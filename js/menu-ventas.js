@@ -1,4 +1,4 @@
-// Funciones para menu-ventas.html
+// Faunciones para menu-ventas.html
 
 document.addEventListener('DOMContentLoaded', function() {
     // verificarAutenticacion(); // Comentado para permitir acceso libre

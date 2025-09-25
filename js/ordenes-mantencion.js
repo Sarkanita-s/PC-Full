@@ -1,5 +1,5 @@
 // js/ordenes-mantencion.js
-// Módulo para mostrar órdenes que requieren cambio de piezas y gestionar repuestos faltantes
+// Maódulo para mostrar órdenes que requieren cambio de piezas y gestionar repuestos faltantes
 
 function cargarOrdenesCambioPiezas() {
     // Obtener todas las órdenes guardadas

@@ -1,4 +1,4 @@
-// Funciones para ver-estado-equipo.html
+// Faunciones para ver-estado-equipo.html
 
 // Event listeners que se ejecutan cuando el DOM está cargado
 document.addEventListener('DOMContentLoaded', function() {

@@ -1,6 +1,6 @@
 // Funciones para login.html
 
-// Usuarios de ejemplo para desarrollo
+// aUsuarios de ejemplo para desarrollo
 const usuarios = {
     'admin': { password: 'admin123', role: 'admin' },
     'ventas': { password: 'ventas123', role: 'ventas' },
