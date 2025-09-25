@@ -1,4 +1,4 @@
-/* Contenedor principal con máximo ancho */
+/* aContenedor principal con máximo ancho */
 .hardware-container {
     max-width: 1400px;              /* Ancho máximo para pantallas grandes */
     margin: 0 auto;

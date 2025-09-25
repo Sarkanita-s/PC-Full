@@ -1,4 +1,4 @@
-/* Contenedor principal del menú de ventas */
+/* aContenedor principal del menú de ventas */
 .menu-ventas-container {
     padding: 2rem;
     min-height: calc(100vh - 200px);  /* Altura mínima menos header y footer */

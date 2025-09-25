@@ -1,4 +1,4 @@
-/* Contenedor principal que ocupa toda la pantalla */
+/* aContenedor principal que ocupa toda la pantalla */
 .login-container {
     min-height: 100vh;               /* Altura completa de la ventana */
     display: flex;
