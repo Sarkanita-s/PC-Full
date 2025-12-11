@@ -1,14 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../css/estilos.css';
-
-const usuarios = {
-  'admin': { password: 'admin123', role: 'admin' },
-  'ventas': { password: 'ventas123', role: 'ventas' },
-  'vendedor1': { password: 'venta123', role: 'ventas' },
-  'sofia': { password: 'sofia123', role: 'ventas' },
-  'cliente': { password: 'cliente123', role: 'client' }
-};
+import { usuarios } from '../config/credenciales.js';
 
 function Sesion() {
   const [form, setForm] = useState({ username: '', password: '', role: '' });
@@ -50,7 +43,7 @@ function Sesion() {
       if (usuario && usuario.password === form.password && usuario.role === form.role) {
         localStorage.setItem('usuario_logueado', JSON.stringify({
           username: form.username,
-          role: form.role,
+          role: form.role,  
           loginTime: new Date().toISOString()
         }));
 

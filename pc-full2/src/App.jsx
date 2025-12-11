@@ -8,26 +8,40 @@ import IngresarOrden from './pages/ingresar-orden.jsx'
 import Sesion from './pages/sesion.jsx'
 import MenuVentas from './pages/menu-ventas.jsx'
 import EstadoEquipo from './pages/estado-equipo.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
+import { useInactivityLogout } from './hooks/useInactivityLogout.js'
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-function App() {
+function AppContent() {
+  // Logout automático después de 15 minutos de inactividad (900000 ms)
+  useInactivityLogout(15 * 60 * 1000);
+
   return (
-    <Router>
+    <>
       <Header />
 
       <Routes>
         <Route path="/" element={<Principal />} />
         <Route path="/sesion" element={<Sesion />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/hard-repuestos" element={<HardRepuestos />} />
-        <Route path="/ingresar-orden" element={<IngresarOrden />} />
-        <Route path="/menu-ventas" element={<MenuVentas />} />
-        <Route path="/estado-equipo" element={<EstadoEquipo />} />
+        <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><Admin /></ProtectedRoute>} />
+        <Route path="/hard-repuestos" element={<ProtectedRoute requiredRole="admin"><HardRepuestos /></ProtectedRoute>} />
+        <Route path="/ingresar-orden" element={<ProtectedRoute requiredRole="ventas"><IngresarOrden /></ProtectedRoute>} />
+        <Route path="/menu-ventas" element={<ProtectedRoute requiredRole="ventas"><MenuVentas /></ProtectedRoute>} />
+        <Route path="/estado-equipo" element={<ProtectedRoute requiredRole="client"><EstadoEquipo /></ProtectedRoute>} />
       </Routes>
 
       <Footer />
-    </Router>
-  )
+    </>
+  );
 }
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}
+
 export default App;
