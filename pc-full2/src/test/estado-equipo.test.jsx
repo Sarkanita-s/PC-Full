@@ -8,35 +8,6 @@ const RouterWrapper = ({ children }) => (
 );
 
 describe('EstadoEquipo Component - Consulta de Estado', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    
-    // Cargar datos simulados en localStorage para las pruebas
-    const ordenesData = {
-      'ORD-2024-001': {
-        ordenNumero: 'ORD-2024-001',
-        clienteNombre: 'Juan Pérez',
-        clienteRut: '12345678-9',
-        equipoDescripcion: 'Notebook HP Pavilion 15"',
-        fechaIngreso: '15/09/2024',
-        estadoActual: 'En Reparación',
-        problemaDescripcion: 'Sobrecalentamiento y lentitud del sistema',
-        etapaActual: 'reparacion'
-      },
-      'ORD-2024-002': {
-        ordenNumero: 'ORD-2024-002',
-        clienteNombre: 'María González',
-        clienteRut: '98765432-1',
-        equipoDescripcion: 'PC Desktop Intel i5',
-        fechaIngreso: '12/09/2024',
-        estadoActual: 'Listo para Entrega',
-        problemaDescripcion: 'No enciende el equipo',
-        etapaActual: 'finalizado'
-      }
-    };
-    
-    localStorage.setItem('ordenes_data', JSON.stringify(ordenesData));
-  });
 
   // CATEGORÍA: RENDERIZADO BÁSICO Y ELEMENTOS PRINCIPALES
   // Clasificación: Pruebas de UI/Renderizado
@@ -44,7 +15,6 @@ describe('EstadoEquipo Component - Consulta de Estado', () => {
   
   describe('Renderizado Básico y Elementos Principales', () => {
     // PRUEBA: Título principal
-    // Tipo: Prueba visual básica
     // Valida: Título de la página se muestra correctamente
     it('debe renderizar el título principal', () => {
       render(

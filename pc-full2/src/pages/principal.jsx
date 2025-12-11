@@ -13,8 +13,8 @@ function Principal() {
             calidad
           </p>
           <div className="hero-buttons">
-            <Link to="/ingresar-orden" className="btn btn-primary">
-              Solicitar Servicio
+            <Link to="/estado-equipo" className="btn btn-primary">
+              Ver estado
             </Link>
             <a href="#servicios" className="btn btn-outline">
               Ver Servicios

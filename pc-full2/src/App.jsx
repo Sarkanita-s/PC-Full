@@ -28,7 +28,7 @@ function AppContent() {
         <Route path="/hard-repuestos" element={<ProtectedRoute requiredRole="admin"><HardRepuestos /></ProtectedRoute>} />
         <Route path="/ingresar-orden" element={<ProtectedRoute requiredRole="ventas"><IngresarOrden /></ProtectedRoute>} />
         <Route path="/menu-ventas" element={<ProtectedRoute requiredRole="ventas"><MenuVentas /></ProtectedRoute>} />
-        <Route path="/estado-equipo" element={<ProtectedRoute requiredRole="client"><EstadoEquipo /></ProtectedRoute>} />
+        <Route path="/estado-equipo" element={<EstadoEquipo />} />
       </Routes>
 
       <Footer />
